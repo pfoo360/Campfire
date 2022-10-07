@@ -1,0 +1,11 @@
+const ACCESS_TOKEN_EXPIRE = "30s";
+const REFRESH_TOKEN_EXPIRE = "30s";
+
+const ACCESS_CONFIG = {
+  expiresIn: ACCESS_TOKEN_EXPIRE,
+};
+const REFRESH_CONFIG = {
+  expiresIn: REFRESH_TOKEN_EXPIRE,
+};
+
+module.exports = { ACCESS_CONFIG, REFRESH_CONFIG };
