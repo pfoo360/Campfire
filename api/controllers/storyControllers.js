@@ -16,6 +16,7 @@ const getStories = async (req, res, next) => {
 
     const offset = pageSize * (page - 1);
     const { where } = req.body;
+    console.log(where);
 
     const [result, count] = await Story.getStories({
       where: {

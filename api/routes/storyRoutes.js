@@ -15,7 +15,7 @@ const verifyJWT = require(path.join(
 
 const router = express.Router();
 
-router.get("/", storyControllers.getStories);
+router.post("/", storyControllers.getStories);
 
 router.get("/:id", storyControllers.getAStory);
 
