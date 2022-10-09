@@ -4,7 +4,7 @@ const Story = require(path.join(__dirname, "..", "models", "Story"));
 const db = require("../configs/dbConn");
 
 //@desc Get stories from db, returns stories based on search query OR returns all stories (default)
-//@route GET /api/v1/story/?page=:page
+//@route POST /api/v1/story/?page=:page
 const getStories = async (req, res, next) => {
   try {
     const pageSize = 2; //how many stories per page
