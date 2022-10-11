@@ -2,12 +2,13 @@ import logo from "./logo.svg";
 import "./App.css";
 import SingleStory from "./components/SingleStory/SingleStory";
 import Stories from "./components/Stories/Stories";
+import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
 function App() {
   return (
     <div className="App">
-      <Stories />
-      <SingleStory />
+      <RegistrationForm />
+
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
