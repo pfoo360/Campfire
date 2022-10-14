@@ -20,7 +20,7 @@ class User {
         this.email,
         this.username,
         this.password,
-        this.icon,
+        this.icon || null,
       ]);
       return result;
     } catch (err) {
