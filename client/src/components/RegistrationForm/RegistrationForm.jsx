@@ -73,7 +73,7 @@ const RegistrationForm = () => {
         setRegistrationSuccess("Registration successful");
         onSubmitProps.resetForm();
         onSubmitProps.setSubmitting(true);
-        //to do: navigate to login page
+        //to do: navigate to login page since registration was successful
       } catch (error) {
         if (!error?.response) {
           onSubmitProps.setErrors({ registrationError: "No server response" });
@@ -103,6 +103,7 @@ const RegistrationForm = () => {
 
   return (
     <section>
+      <h1>Register</h1>
       {registrationSuccess && <p>{registrationSuccess}</p>}
       <Formik
         initialValues={initialValues}
@@ -156,7 +157,7 @@ const RegistrationForm = () => {
               </div>
 
               <button type="submit" disabled={formik.isSubmitting}>
-                Submit
+                Sign Up
               </button>
             </Form>
           );

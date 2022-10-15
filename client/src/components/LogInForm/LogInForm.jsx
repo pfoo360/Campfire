@@ -1,12 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useFormik } from "formik";
-import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LogInForm() {
   const LOGIN_URL = "/api/v1/auth/login";
 
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const initialValues = {
     username: "",
@@ -39,10 +44,12 @@ function LogInForm() {
           withCredentials: true,
         });
         console.log(response);
+        setSubmitting(true);
         const accessToken = response?.data?.accessToken;
         const userInfo = response?.data?.userInfo;
         setAuth({ userInfo, accessToken });
-        setSubmitting(true);
+        console.log("from", from);
+        navigate(from, { replace: true });
       } catch (error) {
         console.log(error);
         if (!error?.response) {
