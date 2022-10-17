@@ -1,4 +1,4 @@
-const ACCESS_TOKEN_EXPIRE = "30s";
+const ACCESS_TOKEN_EXPIRE = "15s";
 const REFRESH_TOKEN_EXPIRE = "30s";
 
 const ACCESS_CONFIG = {

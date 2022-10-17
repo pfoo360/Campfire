@@ -11,11 +11,11 @@ import CheckAuth from "./components/CheckAuth/CheckAuth";
 function App() {
   return (
     <Routes>
-      {/*public routes; if use is signed in, and tries to access these, redirect them to home*/}
+      {/*if user is signed in, and tries to access these, redirect them to home*/}
       <Route element={<CheckAuth />}>
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/login" element={<LogInForm />} />
       </Route>
-      <Route path="/login" element={<LogInForm />} />
       <Route path="/" element={<Stories />} />
       {/*Protected routes*/}
       <Route element={<RequireAuth />}>

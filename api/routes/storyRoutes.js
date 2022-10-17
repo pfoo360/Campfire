@@ -19,7 +19,7 @@ router.post("/", storyControllers.getStories);
 
 router.get("/:id", storyControllers.getAStory);
 
-router.post("/", verifyJWT, storyControllers.createAStory);
+router.post("/create", verifyJWT, storyControllers.createAStory);
 
 router.put("/:id", storyControllers.updateAStory);
 

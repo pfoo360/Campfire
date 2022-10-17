@@ -2,7 +2,7 @@ import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-function TextEditor({ story, setStory }) {
+function TextEditor({ story, setStory, setStoryBlur }) {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -16,8 +16,10 @@ function TextEditor({ story, setStory }) {
       theme="snow"
       modules={modules}
       value={story}
+      onBlur={(e) => setStoryBlur(true)}
       onChange={setStory}
       placeholder={"tell a story..."}
+      required
     />
   );
 }

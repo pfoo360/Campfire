@@ -6,6 +6,7 @@ const MAX_AGE = 30 * 1000;
 
 const JWT_CONFIG = {
   httpOnly: true,
+  secure: true,
   sameSite: "None",
   maxAge: MAX_AGE,
 };

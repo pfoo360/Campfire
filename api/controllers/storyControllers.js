@@ -74,7 +74,7 @@ const getAStory = async (req, res, next) => {
 };
 
 //@desc Adds a story in db
-//@route POST /api/v1/story/
+//@route POST /api/v1/story/create
 const createAStory = async (req, res, next) => {
   try {
     const { title, story, image = null } = req.body;

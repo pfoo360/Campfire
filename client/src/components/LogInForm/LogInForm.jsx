@@ -11,6 +11,7 @@ function LogInForm() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  console.log("location", location);
   const from = location.state?.from?.pathname || "/";
 
   const initialValues = {

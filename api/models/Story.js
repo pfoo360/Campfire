@@ -19,7 +19,7 @@ class Story {
       const [result, column] = await db.execute(q, [
         this.title,
         this.story,
-        this.image,
+        this.image || null,
         this.date,
         this.uid,
         this.uname,
