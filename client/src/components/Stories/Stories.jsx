@@ -4,14 +4,16 @@ import Card from "../Card/Card";
 import SearchBar from "../SearchBar/SearchBar";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useLogout from "../../hooks/useLogout";
 
 const Stories = () => {
   const [query, setQuery] = useState("");
   const [stories, setStories] = useState([]);
 
   const auth = useAuth();
-  console.log("stories", auth);
   const navigate = useNavigate();
+
+  const logout = useLogout();
 
   useEffect(() => {
     let isMounted = true;
@@ -25,16 +27,16 @@ const Stories = () => {
             story: query,
           },
         };
-        const stories = await axios.post("/api/v1/story/?page=1", body, {
+        const stories = await axios.post("/api/v1/story/?page=2", body, {
           headers: { "Content-Type": "application/json" },
           signal: controller.signal,
         });
-        // console.log("result", stories.data.result);
-        // console.log("currentpage", stories.data.currentPage);
-        // console.log("maxnum", stories.data.maxNumberOfPages);
-        // console.log("pgsize", stories.data.pageSize);
-        // console.log("skipped", stories.data.storiesSkipped);
-        // console.log("totalfound", stories.data.totalStoriesFound);
+        console.log("result", stories.data.result);
+        console.log("currentpage", stories.data.currentPage);
+        console.log("maxnum", stories.data.maxNumberOfPages);
+        console.log("pgsize", stories.data.pageSize);
+        console.log("skipped", stories.data.storiesSkipped);
+        console.log("totalfound", stories.data.totalStoriesFound);
         isMounted && setStories(stories.data.result);
       } catch (error) {
         console.log(error);
@@ -43,7 +45,7 @@ const Stories = () => {
     getStories();
 
     return () => {
-      console.log("cleanup fn");
+      // console.log("cleanup fn");
       isMounted = false;
       controller.abort();
     };
@@ -53,6 +55,14 @@ const Stories = () => {
       <button onClick={() => navigate("/register")}>register</button>
       <button onClick={() => navigate("/login")}>login</button>
       <button onClick={() => navigate("/write")}>write</button>
+      <button
+        onClick={() => {
+          logout();
+          navigate("/login");
+        }}
+      >
+        logout
+      </button>
       <SearchBar setter={setQuery} />
       {stories.map((story) => (
         <Card key={story.id} story={story} />

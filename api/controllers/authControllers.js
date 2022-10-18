@@ -119,6 +119,7 @@ const handleRefreshToken = async (req, res, next) => {
 const handleLogout = async (req, res, next) => {
   try {
     const cookies = req.cookies;
+
     if (!cookies?.jwt) return res.sendStatus(204);
 
     const refreshToken = cookies.jwt;
@@ -130,7 +131,6 @@ const handleLogout = async (req, res, next) => {
       res.clearCookie("jwt", cookieConfig.JWT_CONFIG);
       return res.sendStatus(204);
     }
-
     //refresh token in cookie is same refresh token in db
     const result = await User.deleteRefreshTokenById(foundUser.id);
     res.clearCookie("jwt", cookieConfig.JWT_CONFIG);

@@ -101,6 +101,7 @@ function StoryForm() {
   const submitWithNoImage = async () => {
     setIsSubmitting(true);
     setSubmitError("");
+    setUploadImageError("");
     try {
       const response = await axiosPrivate.post(
         CREATE_STORY_URL,
