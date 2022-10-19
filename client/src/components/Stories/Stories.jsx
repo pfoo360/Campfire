@@ -1,55 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "../../api/axios";
 import Card from "../Card/Card";
 import SearchBar from "../SearchBar/SearchBar";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
+import useStories from "../../hooks/useStories";
 
 const Stories = () => {
   const [query, setQuery] = useState("");
-  const [stories, setStories] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const auth = useAuth();
   const navigate = useNavigate();
 
   const logout = useLogout();
 
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-    const getStories = async () => {
-      try {
-        console.log(query);
-        const body = {
-          where: {
-            title: query,
-            story: query,
-          },
-        };
-        const stories = await axios.post("/api/v1/story/?page=2", body, {
-          headers: { "Content-Type": "application/json" },
-          signal: controller.signal,
-        });
-        console.log("result", stories.data.result);
-        console.log("currentpage", stories.data.currentPage);
-        console.log("maxnum", stories.data.maxNumberOfPages);
-        console.log("pgsize", stories.data.pageSize);
-        console.log("skipped", stories.data.storiesSkipped);
-        console.log("totalfound", stories.data.totalStoriesFound);
-        isMounted && setStories(stories.data.result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getStories();
+  const [stories, isLoading, isError, error, hasMore] = useStories({
+    query,
+    pageNumber,
+  });
 
-    return () => {
-      // console.log("cleanup fn");
-      isMounted = false;
-      controller.abort();
-    };
-  }, [query]);
+  const observer = useRef();
+  const lastStoryElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prev) => prev + 1);
+        }
+      });
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [isLoading, hasMore]
+  );
+
   return (
     <div>
       <button onClick={() => navigate("/register")}>register</button>
@@ -63,10 +53,30 @@ const Stories = () => {
       >
         logout
       </button>
-      <SearchBar setter={setQuery} />
-      {stories.map((story) => (
-        <Card key={story.id} story={story} />
-      ))}
+      <SearchBar
+        setQuery={setQuery}
+        query={query}
+        setPageNumber={setPageNumber}
+      />
+
+      <p>{isLoading}</p>
+      <ul>
+        {stories.map((story, index) => {
+          if (stories.length === index + 1) {
+            return (
+              <li ref={lastStoryElementRef} key={story.id}>
+                <Card story={story} />
+              </li>
+            );
+          } else {
+            return (
+              <li key={story.id}>
+                <Card story={story} />
+              </li>
+            );
+          }
+        })}
+      </ul>
     </div>
   );
 };

@@ -37,6 +37,7 @@ const getStories = async (req, res, next) => {
       pageSize,
       storiesSkipped: offset,
       maxNumberOfPages,
+      where,
     });
   } catch (error) {
     console.log(error);

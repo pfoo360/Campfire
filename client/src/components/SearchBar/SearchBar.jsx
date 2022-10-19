@@ -1,12 +1,12 @@
 import React from "react";
 
-const SearchBar = ({ setter }) => {
+const SearchBar = ({ setQuery, query, setPageNumber }) => {
   const onChangeHandler = (e) => {
     e.preventDefault();
-    console.log(e);
-    setter(e.target.value);
+    setQuery(e.target.value);
+    setPageNumber(1);
   };
-  return <input onChange={(e) => onChangeHandler(e)} />;
+  return <input type="text" value={query} onChange={onChangeHandler} />;
 };
 
 export default SearchBar;

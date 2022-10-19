@@ -36,10 +36,10 @@ const SingleStory = () => {
       <div>{story.uname}</div>
       <div>{story.date}</div>
       {story.image && <img src={story.image} alt="" />}
-      <img
+      {/*<img
         src="https://images.unsplash.com/photo-1665250998590-d222b025f3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
         alt=""
-      />
+  />*/}
       <div>{story.story}</div>
     </div>
   );

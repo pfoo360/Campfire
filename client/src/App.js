@@ -20,6 +20,7 @@ function App() {
         </Route>
 
         <Route path="/" element={<Stories />} />
+        <Route path="/story/:id" element={<SingleStory />} />
 
         {/*Protected routes*/}
         <Route element={<RequireAuth />}>
