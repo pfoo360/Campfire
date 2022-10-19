@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TextEditor from "./TextEditor";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -19,11 +19,11 @@ function StoryForm() {
   const [file, setFile] = useState(null);
   const [uploadImageError, setUploadImageError] = useState("");
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(localStorage.getItem("title") || "");
   const [titleBlur, setTitleBlur] = useState(false);
   const [titleError, setTitleError] = useState("");
 
-  const [story, setStory] = useState("");
+  const [story, setStory] = useState(localStorage.getItem("story") || "");
   const [storyBlur, setStoryBlur] = useState(false);
   const [storyError, setStoryError] = useState("");
 
@@ -49,6 +49,14 @@ function StoryForm() {
     } else if (story.length > 9999) {
       setStoryError("Story exceeds limit");
     }
+  }, [story]);
+
+  useEffect(() => {
+    localStorage.setItem("title", title);
+  }, [title]);
+
+  useEffect(() => {
+    localStorage.setItem("story", story);
   }, [story]);
 
   const handleFile = (e) => {
@@ -81,6 +89,8 @@ function StoryForm() {
       );
       console.log(response);
       setSubmitSuccess("Submit success");
+      localStorage.removeItem("title");
+      localStorage.removeItem("story");
       navigate("/");
     } catch (error) {
       if (error?.response?.status === 401) {
@@ -112,6 +122,8 @@ function StoryForm() {
       );
       console.log("submitwithnoimage", response);
       setSubmitSuccess("Submit success");
+      localStorage.removeItem("title");
+      localStorage.removeItem("story");
       navigate("/");
     } catch (error) {
       if (error?.response?.status === 401) {
