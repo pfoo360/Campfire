@@ -8,6 +8,7 @@ import StoryForm from "./components/StoryForm/StoryForm";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PersistLogin from "./components/PersistLogin/PersistLogin";
+import UserPage from "./components/UserPage/UserPage";
 
 function App() {
   return (
@@ -20,7 +21,9 @@ function App() {
         </Route>
 
         <Route path="/" element={<Stories />} />
-        <Route path="/story/:id" element={<SingleStory />} />
+        <Route path="/story/:story_id" element={<SingleStory />} />
+
+        <Route path="/user/:user_id" element={<UserPage />} />
 
         {/*Protected routes*/}
         <Route element={<RequireAuth />}>

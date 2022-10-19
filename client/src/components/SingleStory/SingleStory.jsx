@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { format } from "date-fns";
+import { useParams, Link } from "react-router-dom";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
 //import image2 from "../../../../uploads/1665037305674--7ee44dc2-63b3-4253-a003-d3d68b537667.jpg";
 
 const SingleStory = () => {
+  const STORY_URL = "/api/v1/story/";
   const [story, setStory] = useState({});
+  const { story_id } = useParams();
+  const { auth } = useAuth();
 
   useEffect(() => {
     const getAStory = async () => {
-      const story = await axios.get("http://localhost:8800/api/v1/story/11");
+      const story = await axios.get(`${STORY_URL}${story_id}`);
       //console.log(story);
       let image;
       //console.log("result", story.data.result[0]);
@@ -22,7 +27,7 @@ const SingleStory = () => {
         ...story.data.result[0],
         date: format(
           new Date(story.data.result[0].date),
-          "yyyy-MM-dd HH:mm:ss"
+          "yyyy-MMMM-dd HH:mm:ss"
         ),
         image,
       });
@@ -32,8 +37,11 @@ const SingleStory = () => {
 
   return (
     <div>
+      {story.uid === auth?.userInfo?.id && <p>this is your story</p>}
       <div>{story.title}</div>
-      <div>{story.uname}</div>
+      <div>
+        <Link to={`/user/${story.uname}`}>{story.uname}</Link>
+      </div>
       <div>{story.date}</div>
       {story.image && <img src={story.image} alt="" />}
       {/*<img
