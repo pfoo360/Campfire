@@ -9,12 +9,15 @@ import DeleteStory from "./DeleteStory";
 const SingleStory = () => {
   const STORY_URL = "/api/v1/story/";
   const [story, setStory] = useState({});
+  const [openDeleteDialogBox, setOpenDeleteDialogBox] = useState(false);
+
   const { story_id } = useParams();
   const { auth } = useAuth();
 
   useEffect(() => {
     const getAStory = async () => {
       const story = await axios.get(`${STORY_URL}${story_id}`);
+      console.log(story);
       // console.log(auth?.userInfo?.id);
       // console.log(story.data.result[0].uid);
       // console.log(story.data.result[0].uid === auth?.userInfo?.id);
@@ -40,38 +43,34 @@ const SingleStory = () => {
     getAStory();
   }, []);
 
-  const [attemptDelete, setAttemptDelete] = useState(false);
-
   const attemptToDelete = () => {
-    setAttemptDelete(true);
-    console.log(attemptDelete);
+    setOpenDeleteDialogBox(true);
   };
 
-  const [arr, setArr] = useState([1, 2, 3]);
-  const add = () => {
-    console.log(123);
-    setArr((prev) => [...prev, arr.length + 1]);
-    console.log(456);
-  };
+  // const [arr, setArr] = useState([1, 2, 3]);
+  // const add = () => {
+  //   console.log(123);
+  //   setArr((prev) => [...prev, arr.length + 1]);
+  //   console.log(456);
+  // };
 
-  const hello = () => {
-    console.log(78);
-    console.log("hello");
-    console.log(89);
-  };
-  const test = "sdf";
-  const last = useCallback(
-    (node) => {
-      console.log(node);
-      console.log("sdfsdfdf");
-    },
-    [test]
-  );
-  console.log(story);
+  // const hello = () => {
+  //   console.log(78);
+  //   console.log("hello");
+  //   console.log(89);
+  // };
+  // const test = "sdf";
+  // const last = useCallback(
+  //   (node) => {
+  //     console.log(node);
+  //     console.log("sdfsdfdf");
+  //   },
+  //   [test]
+  // );
 
   return (
     <div>
-      {arr.map((el, ind) => {
+      {/*arr.map((el, ind) => {
         console.log(el);
         if (arr.length === ind + 1) {
           console.log(el, ind);
@@ -79,9 +78,14 @@ const SingleStory = () => {
           console.log("222222222222222");
         }
         return <div>{el}</div>;
-      })}
-      <button onClick={add}>c</button>
-      {attemptDelete && <DeleteStory id={story.id} />}
+      })*/}
+      {/*<button onClick={add}>c</button>*/}
+      {openDeleteDialogBox && (
+        <DeleteStory
+          id={story.id}
+          setOpenDeleteDialogBox={setOpenDeleteDialogBox}
+        />
+      )}
       <div>{story.title}</div>
       <div>
         <Link to={`/user/${story.uname}`}>{story.uname}</Link>
