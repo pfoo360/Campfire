@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 //DELETE story URL: /api/v1/story/:id
 const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
@@ -10,6 +11,9 @@ const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { setAuth } = useAuth();
 
   const deleteStory = async () => {
     setDeleteSuccess(false);
@@ -30,10 +34,13 @@ const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
       //401=unauthorized bc refresh token also expried
       if (!error?.response) {
         setDeleteError("No server response");
-      } else if (
-        error.response?.status === 401 ||
-        error.response?.status === 403
-      ) {
+      } else if (error.response?.status === 401) {
+        setDeleteError("Unauthorized");
+        setAuth({});
+        setTimeout(() => {
+          navigate("/login", { state: { from: location }, replace: true });
+        }, 1000);
+      } else if (error.response?.status === 403) {
         setDeleteError("Forbidden");
       } else if (error.response?.status === 404) {
         setDeleteError("Story not found");
