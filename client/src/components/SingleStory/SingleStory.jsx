@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { useParams, Link } from "react-router-dom";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import DeleteStory from "./DeleteStory";
 //import image2 from "../../../../uploads/1665037305674--7ee44dc2-63b3-4253-a003-d3d68b537667.jpg";
 
 const SingleStory = () => {
@@ -39,6 +40,13 @@ const SingleStory = () => {
     getAStory();
   }, []);
 
+  const [attemptDelete, setAttemptDelete] = useState(false);
+
+  const attemptToDelete = () => {
+    setAttemptDelete(true);
+    console.log(attemptDelete);
+  };
+
   const [arr, setArr] = useState([1, 2, 3]);
   const add = () => {
     console.log(123);
@@ -59,6 +67,7 @@ const SingleStory = () => {
     },
     [test]
   );
+  console.log(story);
 
   return (
     <div>
@@ -72,11 +81,14 @@ const SingleStory = () => {
         return <div>{el}</div>;
       })}
       <button onClick={add}>c</button>
+      {attemptDelete && <DeleteStory id={story.id} />}
       <div>{story.title}</div>
       <div>
         <Link to={`/user/${story.uname}`}>{story.uname}</Link>
       </div>
-      {story.isEditable && <p>this is your post</p>}
+      {story.isEditable && (
+        <button onClick={attemptToDelete}>this is your post</button>
+      )}
       <div>{story.date}</div>
       {story.image && <img src={story.image} alt="" />}
       {/*<img
