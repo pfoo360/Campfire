@@ -107,7 +107,14 @@ const createAStory = async (req, res, next) => {
   }
 };
 
+//@route PUT /api/v1/story/:id
 const updateAStory = (req, res, next) => {
+  //get user id and username from req.user (access token)
+  //get the story, title and/or image from req.body
+  //story id from params
+  //perform check first by querying story id and user id+username
+  //if false, then return
+  //call model, passing in object
   res.send("updateStories");
 };
 

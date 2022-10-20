@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import UploadImageError from "./UploadImageError";
 import * as DOMPurify from "dompurify";
 
-function StoryForm() {
+function CreateStoryForm() {
   const UPLOAD_URL = "/api/v1/upload/";
   const CREATE_STORY_URL = "/api/v1/story/create";
   const axiosPrivate = useAxiosPrivate();
@@ -202,7 +202,7 @@ function StoryForm() {
   );
 }
 
-export default StoryForm;
+export default CreateStoryForm;
 
 //title: 255, story: 9999
 //<div
