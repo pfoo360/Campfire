@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { format } from "date-fns";
 import { useParams, Link } from "react-router-dom";
 import axios from "../../api/axios";
@@ -14,6 +14,9 @@ const SingleStory = () => {
   useEffect(() => {
     const getAStory = async () => {
       const story = await axios.get(`${STORY_URL}${story_id}`);
+      // console.log(auth?.userInfo?.id);
+      // console.log(story.data.result[0].uid);
+      // console.log(story.data.result[0].uid === auth?.userInfo?.id);
       //console.log(story);
       let image;
       //console.log("result", story.data.result[0]);
@@ -30,18 +33,50 @@ const SingleStory = () => {
           "yyyy-MMMM-dd HH:mm:ss"
         ),
         image,
+        isEditable: story.data.result[0].uid === auth?.userInfo?.id,
       });
     };
     getAStory();
   }, []);
 
+  const [arr, setArr] = useState([1, 2, 3]);
+  const add = () => {
+    console.log(123);
+    setArr((prev) => [...prev, arr.length + 1]);
+    console.log(456);
+  };
+
+  const hello = () => {
+    console.log(78);
+    console.log("hello");
+    console.log(89);
+  };
+  const test = "sdf";
+  const last = useCallback(
+    (node) => {
+      console.log(node);
+      console.log("sdfsdfdf");
+    },
+    [test]
+  );
+
   return (
     <div>
-      {story.uid === auth?.userInfo?.id && <p>this is your story</p>}
+      {arr.map((el, ind) => {
+        console.log(el);
+        if (arr.length === ind + 1) {
+          console.log(el, ind);
+          return <div ref={last}>{el}</div>;
+          console.log("222222222222222");
+        }
+        return <div>{el}</div>;
+      })}
+      <button onClick={add}>c</button>
       <div>{story.title}</div>
       <div>
         <Link to={`/user/${story.uname}`}>{story.uname}</Link>
       </div>
+      {story.isEditable && <p>this is your post</p>}
       <div>{story.date}</div>
       {story.image && <img src={story.image} alt="" />}
       {/*<img

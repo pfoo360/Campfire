@@ -60,23 +60,14 @@ const Stories = () => {
       />
 
       <p>{isLoading}</p>
-      <ul>
-        {stories.map((story, index) => {
-          if (stories.length === index + 1) {
-            return (
-              <li ref={lastStoryElementRef} key={story.id}>
-                <Card story={story} />
-              </li>
-            );
-          } else {
-            return (
-              <li key={story.id}>
-                <Card story={story} />
-              </li>
-            );
-          }
-        })}
-      </ul>
+
+      {stories.map((story, index) => {
+        if (stories.length === index + 1) {
+          return (
+            <Card ref={lastStoryElementRef} key={story.id} story={story} />
+          );
+        } else return <Card key={story.id} story={story} />;
+      })}
     </div>
   );
 };

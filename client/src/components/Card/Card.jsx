@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
-const Card = ({ story }) => {
-  return (
-    <div>
+const Card = React.forwardRef(({ story }, ref) => {
+  const content = (
+    <>
       <div>
         <Link to={`/story/${story.id}`}>{story.title}</Link>
       </div>
@@ -12,8 +12,11 @@ const Card = ({ story }) => {
       <div>{story.id}</div>
       <div>{story.uid}</div>
       <div>{story.uname}</div>
-    </div>
+    </>
   );
-};
+
+  const result = ref ? <div ref={ref}>{content}</div> : <div>{content}</div>;
+  return result;
+});
 
 export default Card;
