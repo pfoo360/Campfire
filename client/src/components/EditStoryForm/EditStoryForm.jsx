@@ -91,9 +91,7 @@ const EditStoryForm = () => {
     console.log("click");
   };
 
-  return auth?.userInfo?.id !== location?.state?.story?.uid ||
-    !location?.state?.story?.title ||
-    !location?.state?.story?.story ? (
+  return auth?.userInfo?.id !== location?.state?.story?.uid ? (
     <Navigate to="/" />
   ) : (
     <form onSubmit={handleSubmit}>
