@@ -11,8 +11,12 @@ function LogInForm() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log("location", location);
+  console.log("login form location", location);
   const from = location.state?.from?.pathname || "/";
+  //if being sent to /login from /edit, we send the updating story to /login
+  //we need to pass the same updating story on redirect to /edit
+  const story = location.state?.from?.state?.story;
+  console.log("login form story", story);
 
   const initialValues = {
     username: "",
@@ -50,7 +54,7 @@ function LogInForm() {
         const userInfo = response?.data?.userInfo;
         setAuth({ userInfo, accessToken });
         console.log("from", from);
-        navigate(from, { replace: true });
+        navigate(from, { state: { story }, replace: true });
       } catch (error) {
         console.log(error);
         if (!error?.response) {

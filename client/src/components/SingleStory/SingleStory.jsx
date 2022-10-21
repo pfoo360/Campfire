@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { format } from "date-fns";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import DeleteStory from "./DeleteStory";
@@ -13,6 +13,8 @@ const SingleStory = () => {
 
   const { story_id } = useParams();
   const { auth } = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getAStory = async () => {
@@ -91,7 +93,12 @@ const SingleStory = () => {
         <Link to={`/user/${story.uname}`}>{story.uname}</Link>
       </div>
       {story.isEditable && (
-        <button onClick={attemptToDelete}>this is your post</button>
+        <>
+          <button onClick={attemptToDelete}>this is your post</button>
+          <button onClick={() => navigate("/edit", { state: { story } })}>
+            edit
+          </button>
+        </>
       )}
       <div>{story.date}</div>
       {story.image && <img src={story.image} alt="" />}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import TextEditor from "./TextEditor";
+import TextEditor from "../TextEditor/TextEditor";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";

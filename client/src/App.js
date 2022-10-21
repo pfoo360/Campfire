@@ -5,6 +5,7 @@ import Stories from "./components/Stories/Stories";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import LogInForm from "./components/LogInForm/LogInForm";
 import CreateStoryForm from "./components/CreateStoryForm/CreateStoryForm";
+import EditStoryForm from "./components/EditStoryForm/EditStoryForm";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PersistLogin from "./components/PersistLogin/PersistLogin";
@@ -28,6 +29,7 @@ function App() {
         {/*Protected routes*/}
         <Route element={<RequireAuth />}>
           <Route path="/write" element={<CreateStoryForm />} />
+          <Route path="/edit" element={<EditStoryForm />} />
         </Route>
       </Route>
     </Routes>

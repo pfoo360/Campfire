@@ -45,6 +45,7 @@ const Stories = () => {
       <button onClick={() => navigate("/register")}>register</button>
       <button onClick={() => navigate("/login")}>login</button>
       <button onClick={() => navigate("/write")}>write</button>
+      <button onClick={() => navigate("/edit")}>edit</button>
       <button
         onClick={() => {
           logout();
