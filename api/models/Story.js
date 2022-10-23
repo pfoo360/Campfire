@@ -1,6 +1,7 @@
 const path = require("path");
 // const { deleteAStory } = require("../controllers/storyControllers");
 const db = require(path.join(__dirname, "..", "configs", "dbConn"));
+const { format } = require("date-fns");
 
 class Story {
   constructor(payload) {
@@ -82,6 +83,46 @@ class Story {
       const q = "SELECT * FROM stories WHERE id = ?";
       const [result, column] = await db.execute(q, [id]);
       return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  static async updateStory({
+    userId,
+    title,
+    story,
+    updateImage,
+    image,
+    storyId,
+  }) {
+    try {
+      if (updateImage) {
+        const q =
+          "UPDATE stories SET title = ?, story = ?, image = ?, date = ? WHERE id = ? AND uid = ?";
+        const [result, col] = await db.execute(q, [
+          title,
+          story,
+          image,
+          format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+          storyId,
+          userId,
+        ]);
+        return result;
+      }
+
+      if (!updateImage) {
+        const q =
+          "UPDATE stories SET title = ?, story = ?, date = ? WHERE id = ? AND uid = ?";
+        const [result, col] = await db.execute(q, [
+          title,
+          story,
+          format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+          storyId,
+          userId,
+        ]);
+        return result;
+      }
     } catch (err) {
       throw err;
     }

@@ -21,7 +21,7 @@ router.get("/:id", storyControllers.getAStory);
 
 router.post("/create", verifyJWT, storyControllers.createAStory);
 
-router.put("/:id", storyControllers.updateAStory);
+router.put("/:id", verifyJWT, storyControllers.updateAStory);
 
 router.delete("/:id", verifyJWT, storyControllers.deleteAStory);
 

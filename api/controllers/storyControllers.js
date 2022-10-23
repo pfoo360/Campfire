@@ -108,14 +108,51 @@ const createAStory = async (req, res, next) => {
 };
 
 //@route PUT /api/v1/story/:id
-const updateAStory = (req, res, next) => {
-  //get user id and username from req.user (access token)
+const updateAStory = async (req, res, next) => {
+  const { user } = req; //from access token
+  const userName = user.username;
+  const userId = user.id;
+
+  const storyId = req.params.id;
+
+  const { title, story, updateImage, image } = req.body;
+  // console.log(storyId);
+  // console.log(req.body);
+  console.log(title, story, updateImage, image);
+  // console.log(userName, userId);
+  if (!userId || !storyId || !title || !story || !JSON.stringify(updateImage))
+    return res
+      .status(400)
+      .json({ status: "PUT failure", message: "Invalid request" });
+
+  const col = await Story.updateStory({
+    title: title,
+    story: story,
+    updateImage,
+    image: image || null,
+    storyId,
+    userId,
+  });
+
+  //console.log("col", col);
   //get the story, title and/or image from req.body
-  //story id from params
-  //perform check first by querying story id and user id+username
+  //perform check first by querying story id: if cannot find, 404
+  //compare user id+username with story found, if not equal, unauthorized or forbidden
+  //ui=true, image=null //they want to delete a preexisitng image
+  //ui=true, image=value //they want to delete a preexisting image AND upload a new image
+  //ui=false image=null || value //they dont want to delete preexisting image OR they have no image in db
+
+  //imfd flag set to false; user does not want to delete preexisting img OR they have no image in db
+  //to delete
+  // const q =
+  //   "UPDATE stories SET title = ?, story = ?, date = ? WHERE id = ? AND uid = ?";
+
+  //imfd flag set to true; user wants to delete preexisitng img OR replace preexisting img
+
   //if false, then return
   //call model, passing in object
-  res.send("updateStories");
+
+  res.status(200).json({ message: "good req", col });
 };
 
 //@desc Delete story in db
