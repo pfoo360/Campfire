@@ -7,7 +7,7 @@ const db = require("../configs/dbConn");
 //@route POST /api/v1/story/?page=:page
 const getStories = async (req, res, next) => {
   try {
-    const pageSize = 2; //how many stories per page
+    const pageSize = 6; //how many stories per page
     const { page } = req.query;
     if (isNaN(page))
       return res
@@ -109,50 +109,60 @@ const createAStory = async (req, res, next) => {
 
 //@route PUT /api/v1/story/:id
 const updateAStory = async (req, res, next) => {
-  const { user } = req; //from access token
-  const userName = user.username;
-  const userId = user.id;
+  try {
+    const { user } = req; //from access token
+    const userName = user.username;
+    const userId = user.id;
+    // console.log(userName, userId);
 
-  const storyId = req.params.id;
+    const storyId = req.params.id;
 
-  const { title, story, updateImage, image } = req.body;
-  // console.log(storyId);
-  // console.log(req.body);
-  console.log(title, story, updateImage, image);
-  // console.log(userName, userId);
-  if (!userId || !storyId || !title || !story || !JSON.stringify(updateImage))
-    return res
-      .status(400)
-      .json({ status: "PUT failure", message: "Invalid request" });
+    const { title, story, updateImage, image } = req.body;
+    console.log(title, story, updateImage, image);
 
-  const col = await Story.updateStory({
-    title: title,
-    story: story,
-    updateImage,
-    image: image || null,
-    storyId,
-    userId,
-  });
+    if (!userId || !storyId || !title || !story || !JSON.stringify(updateImage))
+      return res
+        .status(400)
+        .json({ status: "PUT failure", message: "Invalid request" });
 
-  //console.log("col", col);
-  //get the story, title and/or image from req.body
-  //perform check first by querying story id: if cannot find, 404
-  //compare user id+username with story found, if not equal, unauthorized or forbidden
-  //ui=true, image=null //they want to delete a preexisitng image
-  //ui=true, image=value //they want to delete a preexisting image AND upload a new image
-  //ui=false image=null || value //they dont want to delete preexisting image OR they have no image in db
+    const result = await Story.updateStory({
+      title: title,
+      story: story,
+      updateImage,
+      image: image || null,
+      storyId,
+      userId,
+    });
 
-  //imfd flag set to false; user does not want to delete preexisting img OR they have no image in db
-  //to delete
-  // const q =
-  //   "UPDATE stories SET title = ?, story = ?, date = ? WHERE id = ? AND uid = ?";
+    if (result.changedRows === 0 || result.affectedRows === 0) {
+      res.status(404).json({
+        status: "PUT failure",
+        message:
+          "Unable to update story because storyId with corresponding userId does not exist",
+        result,
+      });
+    } else {
+      res
+        .status(200)
+        .json({ status: "PUT success", message: "Story updated", result });
+    }
 
-  //imfd flag set to true; user wants to delete preexisitng img OR replace preexisting img
-
-  //if false, then return
-  //call model, passing in object
-
-  res.status(200).json({ message: "good req", col });
+    // const result = await Story.updateStory({
+    //   title: title,
+    //   story: story,
+    //   updateImage,
+    //   image: image || null,
+    //   storyId: 100,
+    //   userId: 233,
+    // });
+    //compare user id+username with story found, if not equal, unauthorized or forbidden
+    //ui=true, image=null //they want to delete a preexisitng image
+    //ui=true, image=value //they want to delete a preexisting image AND upload a new image
+    //ui=false image=null || image=value //they dont want to delete preexisting image OR they have no image in db
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 };
 
 //@desc Delete story in db

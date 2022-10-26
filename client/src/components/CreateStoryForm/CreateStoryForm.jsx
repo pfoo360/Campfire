@@ -17,6 +17,7 @@ function CreateStoryForm() {
   const { setAuth } = useAuth();
 
   const [file, setFile] = useState(null);
+  const imageInputRef = useRef();
   const [uploadImageError, setUploadImageError] = useState("");
 
   const [title, setTitle] = useState(localStorage.getItem("title") || "");
@@ -63,6 +64,12 @@ function CreateStoryForm() {
     setFile(e.target.files[0]);
   };
 
+  const clearFile = (e) => {
+    e.preventDefault();
+    imageInputRef.current.value = null;
+    setFile(null);
+  };
+
   const upload = async () => {
     try {
       const formData = new FormData();
@@ -91,9 +98,15 @@ function CreateStoryForm() {
       setSubmitSuccess("Submit success");
       localStorage.removeItem("title");
       localStorage.removeItem("story");
-      navigate("/");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
-      if (error?.response?.status === 401) {
+      if (!error?.response) {
+        setSubmitError("No server response");
+        setIsSubmitting(false);
+      } else if (error?.response?.status === 401) {
         setAuth({});
         navigate("/login", { state: { from: location }, replace: true });
       } else if (
@@ -124,9 +137,15 @@ function CreateStoryForm() {
       setSubmitSuccess("Submit success");
       localStorage.removeItem("title");
       localStorage.removeItem("story");
-      navigate("/");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
-      if (error?.response?.status === 401) {
+      if (!error?.response) {
+        setSubmitError("No server response");
+        setIsSubmitting(false);
+      } else if (error?.response?.status === 401) {
         setAuth({});
         navigate("/login", { state: { from: location }, replace: true });
       } else {
@@ -175,7 +194,14 @@ function CreateStoryForm() {
         </div>
 
         <div>
-          <input type="file" id="file" name="file" onChange={handleFile} />
+          <input
+            type="file"
+            id="file"
+            name="file"
+            ref={imageInputRef}
+            onChange={handleFile}
+          />
+          {file && <button onClick={clearFile}>delete</button>}
         </div>
 
         <div>

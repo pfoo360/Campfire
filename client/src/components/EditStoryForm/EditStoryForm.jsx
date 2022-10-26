@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import TextEditor from "../TextEditor/TextEditor";
@@ -18,6 +18,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 //if imfd and no img url supplied, just delete image in column in db
 //if no img and no imfd, leave it alone
 //no image
+//to do: grey out buttons on axios
+//error handling
 const EditStoryForm = () => {
   const location = useLocation();
   const { auth, setAuth } = useAuth();
@@ -37,13 +39,16 @@ const EditStoryForm = () => {
   const [updateImage, setUpdateImage] = useState(false);
 
   const [file, setFile] = useState(null);
-  const [uploadImageError, setUploadImageError] = useState("");
+  const imageRef = useRef();
 
   const [story, setStory] = useState(location?.state?.story?.story);
   const [storyError, setStoryError] = useState("");
   const [storyBlur, setStoryBlur] = useState(false);
 
-  const [uploadStoryError, setUploadStoryError] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateFailure, setUpdateFailure] = useState(false);
+  const [updateFailureMessage, setUpdateFailureMessage] = useState("");
 
   const navigate = useNavigate();
   //console.log("edit story location", location);
@@ -69,8 +74,17 @@ const EditStoryForm = () => {
   }, [title]);
 
   const handleFile = (e) => {
+    console.log("handlefile");
     setUpdateImage(true);
     setFile(e.target.files[0]);
+  };
+
+  const clearFile = () => {
+    if (!location?.state?.story?.image) {
+      setUpdateImage(false);
+    }
+    imageRef.current.value = null;
+    setFile(null);
   };
 
   const upload = async () => {
@@ -116,29 +130,37 @@ const EditStoryForm = () => {
     }
   }, [story]);
 
-  const resolveFailedImageUpload = (keepImageFoundInDb) => {
-    console.log(keepImageFoundInDb);
-    if (keepImageFoundInDb) {
-      console.log("keeping old image");
-      setUpdateImage(false);
-    }
-    if (!keepImageFoundInDb) {
-      setUpdateImage(true);
-      console.log("delete old image");
-    }
-    updateStoryWithNoImage();
-  };
-
   const updateStoryWithImage = async () => {
+    setUpdateSuccess(false);
+    setUpdateFailure(false);
+    setUpdateFailureMessage("");
     try {
+      setIsUpdating(true);
       const image = await upload();
       console.log("uswi", image);
       const body = { title, story, updateImage, image };
-      const result = await axiosPrivate.put(`${UPDATE_URL}${STORY_ID}`, body);
+      const response = await axiosPrivate.put(
+        `${UPDATE_URL}${STORY_ID}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
       console.log(error);
+      setUpdateFailure(true);
+
       if (!error?.response) {
-        setUploadStoryError("No server response");
+        setUpdateFailureMessage("No server response");
       } else if (error.response?.status === 401) {
         setAuth({});
         navigate("/login", { state: { from: location }, replace: true });
@@ -146,20 +168,58 @@ const EditStoryForm = () => {
         error?.response?.data?.fileValidationError ||
         error?.response?.data?.message === "File too large"
       ) {
-        setUploadImageError("Unable to upload image");
-        console.log(error);
+        setUpdateFailureMessage("Unable to upload image");
+      } else if (error.response?.status === 404) {
+        setUpdateFailureMessage(
+          "storyID with corresponding userID does not exist"
+        );
+      } else {
+        setUpdateFailureMessage("Unable to update story");
       }
+      setIsUpdating(false);
     }
   };
 
   const updateStoryWithNoImage = async () => {
+    setUpdateSuccess(false);
+    setUpdateFailure(false);
+    setUpdateFailureMessage("");
     try {
+      setIsUpdating(true);
       const body = { title, story, updateImage, image: null };
       console.log("uswnib", body);
-      const response = await axiosPrivate.put(`${UPDATE_URL}${STORY_ID}`, body);
+      const response = await axiosPrivate.put(
+        `${UPDATE_URL}${STORY_ID}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       console.log(response.data);
+
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
       console.log(error);
+      setUpdateFailure(true);
+      if (!error?.response) {
+        setUpdateFailureMessage("No server response");
+      } else if (error?.response?.status === 401) {
+        setAuth({});
+        navigate("/login", { state: { from: location }, replace: true });
+      } else if (error?.response?.status === 404) {
+        setUpdateFailureMessage(
+          "storyID with corresponding userID does not exist"
+        );
+      } else {
+        setUpdateFailureMessage("Unable to update story");
+      }
+      setIsUpdating(false);
     }
   };
 
@@ -179,19 +239,8 @@ const EditStoryForm = () => {
     <Navigate to="/" />
   ) : (
     <>
-      {uploadImageError && (
-        <>
-          <p>
-            {uploadImageError}
-            <br />
-            keep old image instead?
-          </p>
-          <button onClick={() => resolveFailedImageUpload(true)}>keep</button>
-          <button onClick={() => resolveFailedImageUpload(false)}>
-            delete
-          </button>
-        </>
-      )}
+      {updateSuccess && <p>story updated</p>}
+      {updateFailure && <p>{updateFailureMessage}</p>}
       <form>
         <div>
           <label htmlFor="title">Title</label>
@@ -210,7 +259,10 @@ const EditStoryForm = () => {
         <div>
           {location?.state?.story?.image && !updateImage && (
             <div>
-              <img src={location.state.story.image} />
+              <img
+                src={location.state.story.image}
+                alt={`${location?.state?.story?.uname}'s img for story with story ID ${location?.state.story?.id}`}
+              />
             </div>
           )}
 
@@ -229,9 +281,18 @@ const EditStoryForm = () => {
             ) : null}
           </div>
 
-          {(!location.state.story.image || updateImage) && (
-            <input type="file" id="file" name="file" onChange={handleFile} />
-          )}
+          <div>
+            {(!location.state.story.image || updateImage) && (
+              <input
+                type="file"
+                id="file"
+                name="file"
+                ref={imageRef}
+                onChange={handleFile}
+              />
+            )}
+            {file ? <button onClick={clearFile}>delete</button> : null}
+          </div>
         </div>
 
         <div>
@@ -244,7 +305,13 @@ const EditStoryForm = () => {
           {storyBlur && storyError && <p>{storyError}</p>}
         </div>
 
-        <button type="submit" onClick={(e) => handleSubmit(e)}>
+        <button
+          type="submit"
+          onClick={(e) => handleSubmit(e)}
+          disabled={
+            isUpdating || (titleBlur && titleError) || (storyBlur && storyError)
+          }
+        >
           update
         </button>
 
@@ -252,6 +319,8 @@ const EditStoryForm = () => {
         <div>{location.state.story.title}</div>
         <div>{story}</div>
         <div>{location.state.story.story}</div>
+        <div>{JSON.stringify(location.state.story.uname)}</div>
+        <div>{JSON.stringify(location.state.story.id)}</div>
         <div>{`updateImage, ${JSON.stringify(updateImage)}`}</div>
         <div>{`no image, ${JSON.stringify(
           !location?.state?.story?.image
