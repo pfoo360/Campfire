@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<Stories />} />
         <Route path="/story/:story_id" element={<SingleStory />} />
 
-        <Route path="/user/:user_id" element={<UserPage />} />
+        <Route path="/user/:username" element={<UserPage />} />
 
         {/*Protected routes*/}
         <Route element={<RequireAuth />}>

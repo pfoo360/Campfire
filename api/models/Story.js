@@ -88,6 +88,17 @@ class Story {
     }
   }
 
+  static async getStoriesByUsername({ username }) {
+    try {
+      const q =
+        "SELECT stories.title, stories.story, stories.date FROM stories WHERE uid IN (SELECT users.id FROM users WHERE users.username = ?)";
+      const [result, column] = await db.execute(q, [username]);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   static async updateStory({
     userId,
     title,

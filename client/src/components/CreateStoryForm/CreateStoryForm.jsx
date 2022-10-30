@@ -4,7 +4,6 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import UploadImageError from "./UploadImageError";
-import * as DOMPurify from "dompurify";
 
 function CreateStoryForm() {
   const UPLOAD_URL = "/api/v1/upload/";

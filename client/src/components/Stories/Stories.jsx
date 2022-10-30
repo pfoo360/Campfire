@@ -40,12 +40,19 @@ const Stories = () => {
     [isLoading, hasMore]
   );
 
+  const btn = async (e) => {
+    e.preventDefault();
+    const result = await axios.get("/api/v1/story/user/coolguy123");
+    console.log(result);
+  };
+
   return (
     <div>
       <button onClick={() => navigate("/register")}>register</button>
       <button onClick={() => navigate("/login")}>login</button>
       <button onClick={() => navigate("/write")}>write</button>
       <button onClick={() => navigate("/edit")}>edit</button>
+      <button onClick={btn}>user</button>
       <button
         onClick={() => {
           logout();

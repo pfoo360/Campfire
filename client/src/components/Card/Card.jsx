@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import * as DOMPurify from "dompurify";
+
 const Card = React.forwardRef(({ story }, ref) => {
   const content = (
     <>

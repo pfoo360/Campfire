@@ -45,6 +45,21 @@ const getStories = async (req, res, next) => {
   }
 };
 
+//@desc Takes in username from params and returns all stories by said username
+//@route GET /api/v1/story/user/:username
+const getUsersStories = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    console.log(username);
+    const stories = await Story.getStoriesByUsername({ username });
+    console.log(stories);
+    res.status(200).json({ stories });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 //@desc Get a single story from db
 //@route GET /api/v1/story/:id
 const getAStory = async (req, res, next) => {
@@ -135,7 +150,7 @@ const updateAStory = async (req, res, next) => {
     });
 
     if (result.changedRows === 0 || result.affectedRows === 0) {
-      res.status(404).json({
+      return res.status(404).json({
         status: "PUT failure",
         message:
           "Unable to update story because storyId with corresponding userId does not exist",
@@ -206,6 +221,7 @@ const deleteAStory = async (req, res, next) => {
 
 module.exports = {
   getStories,
+  getUsersStories,
   getAStory,
   createAStory,
   updateAStory,

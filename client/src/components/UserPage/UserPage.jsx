@@ -1,10 +1,50 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import axios from "../../api/axios";
 
 const UserPage = () => {
-  const { user_id } = useParams();
+  const GET_STORIES_BY_USERNAME_URL = "/api/v1/story/user/";
+  const { username } = useParams();
+  const effectRan = useRef(false);
+  const [stories, setStories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  return <div>{user_id}</div>;
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const getStoriesByUsername = async () => {
+      try {
+        setIsLoading(true);
+        const result = await axios.get(
+          `${GET_STORIES_BY_USERNAME_URL}${username}`,
+          { signal: controller.signal }
+        );
+        console.log(result.data.stories);
+        setStories(result.data.stories);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
+    };
+
+    if (effectRan.current === true || process.env.NODE_ENV !== "development") {
+      getStoriesByUsername();
+    }
+
+    return () => {
+      effectRan.current = true;
+      controller.abort();
+    };
+  }, [username]);
+
+  return (
+    <div>
+      {JSON.stringify(isLoading)}
+      {username}
+      {JSON.stringify(stories)}
+    </div>
+  );
 };
 
 export default UserPage;
