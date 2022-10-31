@@ -10,6 +10,9 @@ const SingleStory = () => {
   const STORY_URL = "/api/v1/story/";
   const [story, setStory] = useState({});
   const [openDeleteDialogBox, setOpenDeleteDialogBox] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const effectRan = useRef(false);
 
   const { story_id } = useParams();
   const { auth } = useAuth();
@@ -17,32 +20,50 @@ const SingleStory = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const getAStory = async () => {
-      const story = await axios.get(`${STORY_URL}${story_id}`);
-      console.log(story);
-      // console.log(auth?.userInfo?.id);
-      // console.log(story.data.result[0].uid);
-      // console.log(story.data.result[0].uid === auth?.userInfo?.id);
-      //console.log(story);
-      let image;
-      //console.log("result", story.data.result[0]);
-      //console.log("result", story.data.result[0].image);
-      if (story.data.result[0].image) {
-        //console.log(`../../uploads/${story.data.result[0].image}`);
-        image = require(`../../uploads/${story.data.result[0].image}`);
+      try {
+        setIsLoading(true);
+        const story = await axios.get(`${STORY_URL}${story_id}`, {
+          signal: controller.signal,
+        });
+        console.log(story);
+        // console.log(auth?.userInfo?.id);
+        // console.log(story.data.result[0].uid);
+        // console.log(story.data.result[0].uid === auth?.userInfo?.id);
+        //console.log(story);
+        let image;
+        //console.log("result", story.data.result[0]);
+        //console.log("result", story.data.result[0].image);
+        if (story.data.result[0].image) {
+          //console.log(`../../uploads/${story.data.result[0].image}`);
+          image = require(`../../uploads/${story.data.result[0].image}`);
+        }
+        //console.log(image);
+        setStory({
+          ...story.data.result[0],
+          date: format(
+            new Date(story.data.result[0].date),
+            "yyyy-MMMM-dd HH:mm:ss"
+          ),
+          image,
+          isEditable: story.data.result[0].uid === auth?.userInfo?.id,
+        });
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
       }
-      //console.log(image);
-      setStory({
-        ...story.data.result[0],
-        date: format(
-          new Date(story.data.result[0].date),
-          "yyyy-MMMM-dd HH:mm:ss"
-        ),
-        image,
-        isEditable: story.data.result[0].uid === auth?.userInfo?.id,
-      });
     };
-    getAStory();
+    if (effectRan.current === true || process.env.NODE_ENV !== "development") {
+      getAStory();
+    }
+
+    return () => {
+      effectRan.current = true;
+      controller.abort();
+    };
   }, []);
 
   const attemptToDelete = () => {
@@ -72,6 +93,7 @@ const SingleStory = () => {
 
   return (
     <div>
+      {isLoading && <div>loading...</div>}
       {/*arr.map((el, ind) => {
         console.log(el);
         if (arr.length === ind + 1) {

@@ -2,7 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 function LogInForm() {
   const LOGIN_URL = "/api/v1/auth/login";
@@ -117,7 +117,7 @@ function LogInForm() {
         </button>
       </form>
       <p>
-        Need an account? <br /> <span>Sign Up</span>
+        Need an account? <br /> <Link to="/register">Sign Up</Link>
       </p>
     </section>
   );

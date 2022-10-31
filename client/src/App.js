@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth/RequireAuth";
 import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PersistLogin from "./components/PersistLogin/PersistLogin";
 import UserPage from "./components/UserPage/UserPage";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
@@ -21,15 +22,17 @@ function App() {
           <Route path="/login" element={<LogInForm />} />
         </Route>
 
-        <Route path="/" element={<Stories />} />
-        <Route path="/story/:story_id" element={<SingleStory />} />
+        <Route path="/" element={<NavBar />}>
+          <Route path="/" element={<Stories />} />
+          <Route path="/story/:story_id" element={<SingleStory />} />
 
-        <Route path="/user/:username" element={<UserPage />} />
+          <Route path="/user/:username" element={<UserPage />} />
 
-        {/*Protected routes*/}
-        <Route element={<RequireAuth />}>
-          <Route path="/write" element={<CreateStoryForm />} />
-          <Route path="/edit" element={<EditStoryForm />} />
+          {/*Protected routes*/}
+          <Route element={<RequireAuth />}>
+            <Route path="/write" element={<CreateStoryForm />} />
+            <Route path="/edit" element={<EditStoryForm />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

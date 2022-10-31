@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "../../api/axios";
+import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
   const REGISTRATION_URL = "/api/v1/user";
@@ -165,7 +166,7 @@ const RegistrationForm = () => {
       </Formik>
       <p>
         Already registered? <br />
-        <span>Sign In</span>
+        <Link to="/login">Sign In</Link>
       </p>
     </section>
   );

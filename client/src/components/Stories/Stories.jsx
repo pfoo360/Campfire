@@ -49,25 +49,15 @@ const Stories = () => {
   return (
     <div>
       <button onClick={() => navigate("/register")}>register</button>
-      <button onClick={() => navigate("/login")}>login</button>
-      <button onClick={() => navigate("/write")}>write</button>
       <button onClick={() => navigate("/edit")}>edit</button>
       <button onClick={btn}>user</button>
-      <button
-        onClick={() => {
-          logout();
-          navigate("/login");
-        }}
-      >
-        logout
-      </button>
       <SearchBar
         setQuery={setQuery}
         query={query}
         setPageNumber={setPageNumber}
       />
 
-      <p>{isLoading}</p>
+      {isLoading ? <p>loading...</p> : null}
 
       {stories.map((story, index) => {
         if (stories.length === index + 1) {

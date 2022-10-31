@@ -40,9 +40,13 @@ const UserPage = () => {
 
   return (
     <div>
-      {JSON.stringify(isLoading)}
+      {isLoading && <p>{`finding ${username}'s stories...`}</p>}
       {username}
-      {JSON.stringify(stories)}
+      {stories.length ? (
+        JSON.stringify(stories)
+      ) : (
+        <p>hmmm... there doesn't seem to be anything here...</p>
+      )}
     </div>
   );
 };
