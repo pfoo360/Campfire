@@ -2,22 +2,50 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import * as DOMPurify from "dompurify";
+import CardCSS from "./Card.module.css";
 
 const Card = React.forwardRef(({ story }, ref) => {
   const content = (
     <>
-      <div>
-        <Link to={`/story/${story.id}`}>{story.title}</Link>
-      </div>
-      <div>{story.story}</div>
-      <div>{format(new Date(story.date), "yyyy-MM-dd HH:mm:ss")}</div>
-      <div>{story.id}</div>
-      <div>{story.uid}</div>
-      <div>{story.uname}</div>
+      <Link to={`/story/${story.id}`} className={CardCSS.Title_link}>
+        {story.title.length < 51
+          ? story.title
+          : `${story.title.substring(0, 50)}...`}
+      </Link>
+
+      <Link to={`/user/${story.uname}`} className={CardCSS.Author_link}>
+        {story.uname}
+      </Link>
+
+      <p
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(
+            story.story.length < 501
+              ? story.story
+              : `${story.story.substring(0, 500)}...`,
+            {
+              USE_PROFILES: { html: true },
+            }
+          ),
+        }}
+        className={CardCSS.Story}
+      ></p>
+
+      <p className={CardCSS.Date}>
+        {format(new Date(story.date), "yyyy-MM-dd HH:mm")}
+      </p>
+      {/*<div>{story.id}</div>*/}
+      {/*<div>{story.uid}</div>*/}
     </>
   );
 
-  const result = ref ? <div ref={ref}>{content}</div> : <div>{content}</div>;
+  const result = ref ? (
+    <div ref={ref} className={CardCSS.Card}>
+      {content}
+    </div>
+  ) : (
+    <div className={CardCSS.Card}>{content}</div>
+  );
   return result;
 });
 

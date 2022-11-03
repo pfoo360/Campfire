@@ -1,0 +1,96 @@
+.Title {
+  color: #fff;
+  font-size: 3rem;
+  word-wrap: break-word;
+  margin: 0rem 1rem;
+}
+
+.Title::selection {
+  background-color: #36b37e;
+}
+
+.Author:link,
+.Author:visited {
+  text-decoration: none;
+  color: #676e76;
+  margin: 0rem 1rem 1rem;
+}
+
+.Author:hover,
+.Author:active {
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  margin: 0rem 1rem 1rem;
+}
+
+.Author::selection {
+  background-color: #36b37e;
+}
+
+.DeleteButton {
+  border: none;
+  outline: none;
+  background: none;
+  color: #fff;
+  text-decoration: dotted;
+  background-color: #ff5630;
+  border-radius: 10%;
+}
+
+.EditButton {
+  border: none;
+  outline: none;
+  background: none;
+  color: #fff;
+  text-decoration: dotted;
+  background-color: #00875a;
+  border-radius: 10%;
+}
+
+.DeleteButton:hover,
+.EditButton:hover {
+  cursor: pointer;
+}
+
+.Date {
+  color: #676e76;
+  font-size: 0.75rem;
+  margin: 1rem 1rem;
+}
+
+.Date::selection {
+  background-color: #36b37e;
+}
+
+.ImgContainer {
+  margin: 0rem 1rem 0.75rem;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ImgContainer::selection {
+  background-color: #36b37e;
+}
+
+.Img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.Img::selection {
+  background-color: #36b37e;
+}
+
+.Story {
+  margin: 0.75rem 1rem 0rem;
+  word-wrap: break-word;
+  color: #fff;
+  padding-bottom: 1rem;
+}
+
+.Story::selection {
+  background-color: #36b37e;
+}

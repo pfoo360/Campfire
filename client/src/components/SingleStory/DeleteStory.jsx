@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import DeleteStoryCSS from "./DeleteStory.module.css";
 
 //DELETE story URL: /api/v1/story/:id
 const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
@@ -57,18 +58,40 @@ const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
   };
 
   return (
-    <>
-      {deleteError && <p>{deleteError}</p>}
-      {deleteSuccess && <p>story successfully deleted</p>}
-      <div>{id}</div>
-      <p>Confirm delete?</p>
-      <button onClick={deleteStory} disabled={buttonDisabled}>
-        yes
-      </button>
-      <button onClick={doNotDeleteStory} disabled={buttonDisabled}>
-        no
-      </button>
-    </>
+    <div className={DeleteStoryCSS.Container}>
+      {deleteError && (
+        <p
+          className={`${DeleteStoryCSS.Delete_paragraph} ${DeleteStoryCSS.Delete_paragraph__error}`}
+        >
+          {deleteError}
+        </p>
+      )}
+      {deleteSuccess && (
+        <p
+          className={`${DeleteStoryCSS.Delete_paragraph} ${DeleteStoryCSS.Delete_paragraph__success}`}
+        >
+          story successfully deleted
+        </p>
+      )}
+      <p className={DeleteStoryCSS.Delete_paragraph}>Deleting story {id}</p>
+      <p className={DeleteStoryCSS.Delete_paragraph}>Confirm delete?</p>
+      <div>
+        <button
+          onClick={deleteStory}
+          disabled={buttonDisabled}
+          className={`${DeleteStoryCSS.Delete_button} ${DeleteStoryCSS.Delete_button__yes}`}
+        >
+          delete
+        </button>{" "}
+        <button
+          onClick={doNotDeleteStory}
+          disabled={buttonDisabled}
+          className={`${DeleteStoryCSS.Delete_button} ${DeleteStoryCSS.Delete_button__no}`}
+        >
+          no
+        </button>
+      </div>
+    </div>
   );
 };
 

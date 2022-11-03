@@ -1,0 +1,33 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Delete_paragraph {
+  color: #fff;
+  margin: 0.25rem 0;
+}
+
+.Delete_paragraph__success {
+  color: #00875a;
+}
+
+.Delete_paragraph__error {
+  color: #ff5630;
+}
+
+.Delete_button {
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10%;
+}
+
+.Delete_button__yes {
+  background-color: #ff5630;
+}
+.Delete_button__no {
+  background-color: #00875a;
+}

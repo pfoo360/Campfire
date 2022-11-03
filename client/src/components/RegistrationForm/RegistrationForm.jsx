@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "../../api/axios";
 import { Link } from "react-router-dom";
+import RegistrationFormCSS from "./RegistrationForm.module.css";
 
 const RegistrationForm = () => {
   const REGISTRATION_URL = "/api/v1/user";
@@ -103,72 +104,149 @@ const RegistrationForm = () => {
   };
 
   return (
-    <section>
-      <h1>Register</h1>
-      {registrationSuccess && <p>{registrationSuccess}</p>}
-      <Formik
-        initialValues={initialValues}
-        validate={validate}
-        onSubmit={onSubmit}
-      >
-        {(formik) => {
-          return (
-            <Form>
-              {formik.errors.registrationError && (
-                <p>{formik.errors.registrationError}</p>
-              )}
-              <div>
-                <label htmlFor="email">Email</label>
-                <Field type="email" id="email" name="email" />
-                <ErrorMessage name="email" component="div" />
-              </div>
+    <div className={RegistrationFormCSS.Container}>
+      <section className={RegistrationFormCSS.Registration}>
+        <h1 className={RegistrationFormCSS.Registration_header}>Register</h1>
+        {registrationSuccess && <p>{registrationSuccess}</p>}
+        <Formik
+          initialValues={initialValues}
+          validate={validate}
+          onSubmit={onSubmit}
+        >
+          {(formik) => {
+            return (
+              <Form className={RegistrationFormCSS.Registration_form}>
+                {formik.errors.registrationError && (
+                  <p>{formik.errors.registrationError}</p>
+                )}
+                <div className={RegistrationFormCSS.Registration_field}>
+                  <label
+                    htmlFor="email"
+                    className={RegistrationFormCSS.Registration_label}
+                  >
+                    Email
+                  </label>
+                  <Field
+                    type="email"
+                    id="email"
+                    name="email"
+                    className={RegistrationFormCSS.Registration_input}
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="p"
+                    className={RegistrationFormCSS.Registration_error}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="username">Username</label>
-                <Field type="text" id="username" name="username" />
-                <ErrorMessage name="username" component="div" />
-              </div>
+                <div className={RegistrationFormCSS.Registration_field}>
+                  <label
+                    htmlFor="username"
+                    className={RegistrationFormCSS.Registration_label}
+                  >
+                    Username
+                  </label>
+                  <Field
+                    type="text"
+                    id="username"
+                    name="username"
+                    className={RegistrationFormCSS.Registration_input}
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="p"
+                    className={RegistrationFormCSS.Registration_error}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="password">Password</label>
-                <Field type="password" id="password" name="password" />
-                <ErrorMessage name="password" component="div" />
-              </div>
+                <div className={RegistrationFormCSS.Registration_field}>
+                  <label
+                    htmlFor="password"
+                    className={RegistrationFormCSS.Registration_label}
+                  >
+                    Password
+                  </label>
+                  <Field
+                    type="password"
+                    id="password"
+                    name="password"
+                    className={RegistrationFormCSS.Registration_input}
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="p"
+                    className={RegistrationFormCSS.Registration_error}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <Field
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                />
-                <ErrorMessage name="confirmPassword" component="div" />
-              </div>
+                <div className={RegistrationFormCSS.Registration_field}>
+                  <label
+                    htmlFor="confirmPassword"
+                    className={RegistrationFormCSS.Registration_label}
+                  >
+                    Confirm Password
+                  </label>
+                  <Field
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    className={RegistrationFormCSS.Registration_input}
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="p"
+                    className={RegistrationFormCSS.Registration_error}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="icon">Choose an icon</label>
-                <Field as="select" id="icon" name="icon">
-                  {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.key}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage name="icon" component="div" />
-              </div>
+                <div className={RegistrationFormCSS.Registration_field}>
+                  <label
+                    htmlFor="icon"
+                    className={RegistrationFormCSS.Registration_label}
+                  >
+                    Choose an icon
+                  </label>
+                  <Field
+                    as="select"
+                    id="icon"
+                    name="icon"
+                    className={RegistrationFormCSS.Registration_input}
+                  >
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.key}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="icon"
+                    component="p"
+                    className={RegistrationFormCSS.Registration_error}
+                  />
+                </div>
 
-              <button type="submit" disabled={formik.isSubmitting}>
-                Sign Up
-              </button>
-            </Form>
-          );
-        }}
-      </Formik>
-      <p>
-        Already registered? <br />
-        <Link to="/login">Sign In</Link>
-      </p>
-    </section>
+                <button
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                  className={RegistrationFormCSS.Registration_button}
+                >
+                  Sign Up
+                </button>
+              </Form>
+            );
+          }}
+        </Formik>
+        <p className={RegistrationFormCSS.RegistrationRedirect}>
+          Already registered? <br />
+          <Link
+            to="/login"
+            className={RegistrationFormCSS.RegistrationRedirect_link}
+          >
+            Sign In
+          </Link>
+        </p>
+      </section>
+    </div>
   );
 };
 

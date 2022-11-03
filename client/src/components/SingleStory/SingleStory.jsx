@@ -4,6 +4,8 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import DeleteStory from "./DeleteStory";
+import * as DOMPurify from "dompurify";
+import SingleStoryCSS from "./SingleStory.module.css";
 //import image2 from "../../../../uploads/1665037305674--7ee44dc2-63b3-4253-a003-d3d68b537667.jpg";
 
 const SingleStory = () => {
@@ -92,44 +94,55 @@ const SingleStory = () => {
   // );
 
   return (
-    <div>
-      {isLoading && <div>loading...</div>}
-      {/*arr.map((el, ind) => {
-        console.log(el);
-        if (arr.length === ind + 1) {
-          console.log(el, ind);
-          return <div ref={last}>{el}</div>;
-          console.log("222222222222222");
-        }
-        return <div>{el}</div>;
-      })*/}
-      {/*<button onClick={add}>c</button>*/}
+    <>
+      {isLoading && <div className={SingleStoryCSS.Loading}>loading...</div>}
       {openDeleteDialogBox && (
         <DeleteStory
           id={story.id}
           setOpenDeleteDialogBox={setOpenDeleteDialogBox}
         />
       )}
-      <div>{story.title}</div>
-      <div>
-        <Link to={`/user/${story.uname}`}>{story.uname}</Link>
-      </div>
+      <h1 className={SingleStoryCSS.Title}>{story.title}</h1>
+      <Link to={`/user/${story.uname}`} className={SingleStoryCSS.Author}>
+        {story.uname}
+      </Link>
       {story.isEditable && (
         <>
-          <button onClick={attemptToDelete}>this is your post</button>
-          <button onClick={() => navigate("/edit", { state: { story } })}>
-            edit
+          <button
+            onClick={attemptToDelete}
+            className={SingleStoryCSS.DeleteButton}
+          >
+            🗑️
+          </button>{" "}
+          <button
+            onClick={() => navigate("/edit", { state: { story } })}
+            className={SingleStoryCSS.EditButton}
+          >
+            📝
           </button>
         </>
       )}
-      <div>{story.date}</div>
-      {story.image && <img src={story.image} alt="" />}
-      {/*<img
-        src="https://images.unsplash.com/photo-1665250998590-d222b025f3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-        alt=""
-  />*/}
-      <div>{story.story}</div>
-    </div>
+      <p className={SingleStoryCSS.Date}>{story.date}</p>
+
+      <div className={SingleStoryCSS.ImgContainer}>
+        {story.image && (
+          <img
+            src={story.image}
+            alt={`story author: ${story.uname}`}
+            className={SingleStoryCSS.Img}
+          />
+        )}
+      </div>
+
+      <div
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(story.story, {
+            USE_PROFILES: { html: true },
+          }),
+        }}
+        className={SingleStoryCSS.Story}
+      ></div>
+    </>
   );
 };
 

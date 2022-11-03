@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import LogInFormCSS from "./LogInForm.module.css";
 
 function LogInForm() {
   const LOGIN_URL = "/api/v1/auth/login";
@@ -77,49 +78,75 @@ function LogInForm() {
   const formik = useFormik({ initialValues, validate, onSubmit });
 
   return (
-    <section>
-      <h1>Log In</h1>
-      {formik.errors.loginError && <p>{formik.errors.loginError}</p>}
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.username}
-            required
-          />
-          {formik.touched.username && formik.errors.username && (
-            <p>{formik.errors.username}</p>
-          )}
-        </div>
+    <div className={LogInFormCSS.Container}>
+      <section className={LogInFormCSS.LogIn}>
+        <h1 className={LogInFormCSS.LogIn_header}>Log In</h1>
+        {formik.errors.loginError && (
+          <p className={LogInFormCSS.LogInError_paragraph}>
+            {formik.errors.loginError}
+          </p>
+        )}
+        <form
+          onSubmit={formik.handleSubmit}
+          className={LogInFormCSS.LogIn_form}
+        >
+          <div className={LogInFormCSS.LogInField}>
+            <label htmlFor="username" className={LogInFormCSS.LogInField_label}>
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
+              required
+              className={LogInFormCSS.LogInField_input}
+            />
+            {formik.touched.username && formik.errors.username && (
+              <p className={LogInFormCSS.LogInField_paragraph}>
+                {formik.errors.username}
+              </p>
+            )}
+          </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            required
-          />
-          {formik.touched.password && formik.errors.password && (
-            <p>{formik.errors.password}</p>
-          )}
-        </div>
-        <button type="submit" disabled={formik.isSubmitting}>
-          Log In
-        </button>
-      </form>
-      <p>
-        Need an account? <br /> <Link to="/register">Sign Up</Link>
-      </p>
-    </section>
+          <div className={LogInFormCSS.LogInField}>
+            <label htmlFor="password" className={LogInFormCSS.LogInField_label}>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              required
+              className={LogInFormCSS.LogInField_input}
+            />
+            {formik.touched.password && formik.errors.password && (
+              <p className={LogInFormCSS.LogInField_paragraph}>
+                {formik.errors.password}
+              </p>
+            )}
+          </div>
+          <button
+            type="submit"
+            disabled={formik.isSubmitting}
+            className={LogInFormCSS.LogIn_button}
+          >
+            Log In
+          </button>
+        </form>
+        <p className={LogInFormCSS.LogInRedirect}>
+          Need an account? <br />{" "}
+          <Link to="/register" className={LogInFormCSS.LogInRedirect_link}>
+            Sign Up
+          </Link>
+        </p>
+      </section>
+    </div>
   );
 }
 

@@ -1,0 +1,65 @@
+.Card {
+  background-color: #454c52;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.75rem 1rem 0rem;
+}
+
+.Title_link:link,
+.Title_link:visited {
+  word-wrap: break-word;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #f6f7f9;
+}
+
+.Title_link:hover,
+.Title_link:active {
+  word-wrap: break-word;
+  cursor: pointer;
+  color: #fff;
+}
+
+.Title_link::selection {
+  background-color: #36b37e;
+}
+
+.Author_link:link,
+.Author_link:visited {
+  display: block;
+  margin: 0.5rem 0rem;
+  text-decoration: none;
+  color: #676e76;
+}
+
+.Author_link:hover,
+.Author_link:active {
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.Author_link::selection {
+  background-color: #36b37e;
+}
+
+.Story {
+  color: #fff;
+  margin: 0rem;
+  padding: 0rem;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.Story::selection {
+  background-color: #36b37e;
+}
+
+.Date {
+  color: #676e76;
+  margin: 0.5rem 0rem;
+}
+
+.Date::selection {
+  background-color: #36b37e;
+}

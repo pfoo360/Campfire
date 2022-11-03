@@ -1,0 +1,16 @@
+.Background {
+  background-color: #24292e;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.StoriesFlexBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Loading {
+  color: #f6f7f9;
+  margin: 0.5rem 1rem;
+}

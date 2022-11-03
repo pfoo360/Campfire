@@ -1,4 +1,3 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import SingleStory from "./components/SingleStory/SingleStory";
 import Stories from "./components/Stories/Stories";

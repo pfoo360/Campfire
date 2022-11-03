@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
 import useStories from "../../hooks/useStories";
+import StoriesCSS from "./Stories.module.css";
 
 const Stories = () => {
   const [query, setQuery] = useState("");
@@ -47,25 +48,26 @@ const Stories = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => navigate("/register")}>register</button>
+    <div className={StoriesCSS.Background}>
+      {/*<button onClick={() => navigate("/register")}>register</button>
       <button onClick={() => navigate("/edit")}>edit</button>
-      <button onClick={btn}>user</button>
+  <button onClick={btn}>user</button>*/}
       <SearchBar
         setQuery={setQuery}
         query={query}
         setPageNumber={setPageNumber}
       />
+      <div className={StoriesCSS.StoriesFlexBox}>
+        {isLoading ? <p className={StoriesCSS.Loading}>loading...</p> : null}
 
-      {isLoading ? <p>loading...</p> : null}
-
-      {stories.map((story, index) => {
-        if (stories.length === index + 1) {
-          return (
-            <Card ref={lastStoryElementRef} key={story.id} story={story} />
-          );
-        } else return <Card key={story.id} story={story} />;
-      })}
+        {stories.map((story, index) => {
+          if (stories.length === index + 1) {
+            return (
+              <Card ref={lastStoryElementRef} key={story.id} story={story} />
+            );
+          } else return <Card key={story.id} story={story} />;
+        })}
+      </div>
     </div>
   );
 };
