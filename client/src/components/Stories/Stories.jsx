@@ -48,7 +48,7 @@ const Stories = () => {
   };
 
   return (
-    <div className={StoriesCSS.Background}>
+    <div className={StoriesCSS.Container}>
       {/*<button onClick={() => navigate("/register")}>register</button>
       <button onClick={() => navigate("/edit")}>edit</button>
   <button onClick={btn}>user</button>*/}

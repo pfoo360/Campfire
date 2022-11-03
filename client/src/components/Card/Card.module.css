@@ -5,6 +5,14 @@
   margin: 0.75rem 1rem 0rem;
 }
 
+.Link_span {
+  display: block;
+}
+
+.Link_span::selection {
+  background-color: #36b37e;
+}
+
 .Title_link:link,
 .Title_link:visited {
   word-wrap: break-word;
@@ -26,7 +34,6 @@
 
 .Author_link:link,
 .Author_link:visited {
-  display: block;
   margin: 0.5rem 0rem;
   text-decoration: none;
   color: #676e76;
@@ -51,13 +58,15 @@
   word-wrap: break-word;
 }
 
-.Story::selection {
+.Story::selection,
+.Story *::selection {
   background-color: #36b37e;
 }
 
 .Date {
   color: #676e76;
   margin: 0.5rem 0rem;
+  font-size: 0.75rem;
 }
 
 .Date::selection {

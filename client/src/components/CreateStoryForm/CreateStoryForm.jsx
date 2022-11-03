@@ -4,6 +4,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import UploadImageError from "./UploadImageError";
+import CreateStoryFormCSS from "./CreateStoryForm.module.css";
 
 function CreateStoryForm() {
   const UPLOAD_URL = "/api/v1/upload/";
@@ -122,8 +123,8 @@ function CreateStoryForm() {
 
   const submitWithNoImage = async () => {
     setIsSubmitting(true);
-    setSubmitError("");
     setUploadImageError("");
+    setSubmitError("");
     try {
       const response = await axiosPrivate.post(
         CREATE_STORY_URL,
@@ -156,6 +157,14 @@ function CreateStoryForm() {
 
   const submit = async (e) => {
     e.preventDefault();
+    if (
+      !title ||
+      !/^.{1,150}$/.test(title) ||
+      !story ||
+      story === "<p><br></p>" ||
+      story.length > 9999
+    )
+      return;
     if (file) {
       submitWithImage();
       return;
@@ -166,20 +175,39 @@ function CreateStoryForm() {
   };
 
   return (
-    <>
-      {submitError && <p>{submitError}</p>}
-      {submitSuccess && <p>{submitSuccess}</p>}
-      {uploadImageError && (
-        <UploadImageError
-          submitWithNoImage={submitWithNoImage}
-          setIsSubmitting={setIsSubmitting}
-          setUploadImageError={setUploadImageError}
-          setSubmitError={setSubmitError}
-        />
-      )}
+    <div className={CreateStoryFormCSS.Container}>
+      <div className={CreateStoryFormCSS.SubmitResultContainer}>
+        {submitError && (
+          <p
+            className={`${CreateStoryFormCSS.Submit_paragraph} ${CreateStoryFormCSS.Submit_paragraph__error}`}
+          >
+            {submitError}
+          </p>
+        )}
+        {submitSuccess && (
+          <p
+            className={`${CreateStoryFormCSS.Submit_paragraph} ${CreateStoryFormCSS.Submit_paragraph__success}`}
+          >
+            {submitSuccess}
+          </p>
+        )}
+        {uploadImageError && (
+          <UploadImageError
+            submitWithNoImage={submitWithNoImage}
+            setIsSubmitting={setIsSubmitting}
+            setUploadImageError={setUploadImageError}
+            setSubmitError={setSubmitError}
+          />
+        )}
+      </div>
       <form onSubmit={submit}>
-        <div>
-          <label htmlFor="title">Title</label>
+        <div className={CreateStoryFormCSS.CreateStory_field}>
+          <label
+            htmlFor="title"
+            className={CreateStoryFormCSS.CreateStory_label}
+          >
+            Title
+          </label>
           <input
             type="text"
             id="title"
@@ -188,29 +216,55 @@ function CreateStoryForm() {
             onBlur={(e) => setTitleBlur(true)}
             onChange={(e) => setTitle(e.target.value)}
             required
+            className={CreateStoryFormCSS.CreateStory_input}
           />
-          {titleBlur && titleError && <div>{titleError}</div>}
+          {titleBlur && titleError && (
+            <p className={CreateStoryFormCSS.CreateStory_error}>{titleError}</p>
+          )}
         </div>
 
-        <div>
+        <div className={CreateStoryFormCSS.CreateStory_field}>
           <input
             type="file"
             id="file"
             name="file"
             ref={imageInputRef}
             onChange={handleFile}
+            className={`${CreateStoryFormCSS.CreateStory_input} ${CreateStoryFormCSS.CreateStory_input__file}`}
           />
-          {file && <button onClick={clearFile}>delete</button>}
+          {file && (
+            <button
+              onClick={clearFile}
+              disabled={isSubmitting}
+              className={`${CreateStoryFormCSS.CreateStory_button} ${
+                CreateStoryFormCSS.CreateStory_button__delete
+              } ${
+                isSubmitting
+                  ? CreateStoryFormCSS.CreateStory_button__deleteDisabled
+                  : ""
+              }`}
+            >
+              delete
+            </button>
+          )}
         </div>
 
-        <div>
-          <div>{`${story.length}/9999`}</div>
+        <div className={CreateStoryFormCSS.CreateStory_field}>
+          <p
+            className={`${CreateStoryFormCSS.CreateStory_count} ${
+              story.length > 9999
+                ? CreateStoryFormCSS.CreateStory_count__error
+                : ""
+            }`}
+          >{`${story.length}/9999`}</p>
           <TextEditor
             story={story}
             setStory={setStory}
             setStoryBlur={setStoryBlur}
           />
-          {storyBlur && storyError && <div>{storyError}</div>}
+          {storyBlur && storyError && (
+            <p className={CreateStoryFormCSS.CreateStory_error}>{storyError}</p>
+          )}
         </div>
         <button
           type="submit"
@@ -219,19 +273,21 @@ function CreateStoryForm() {
             (titleBlur && titleError) ||
             (storyBlur && storyError)
           }
+          className={`${CreateStoryFormCSS.CreateStory_button} ${
+            CreateStoryFormCSS.CreateStory_button__submit
+          } ${
+            isSubmitting ||
+            (titleBlur && titleError) ||
+            (storyBlur && storyError)
+              ? CreateStoryFormCSS.CreateStory_button__submitDisabled
+              : ""
+          }`}
         >
           create
         </button>
       </form>
-    </>
+    </div>
   );
 }
 
 export default CreateStoryForm;
-
-//title: 255, story: 9999
-//<div
-// dangerouslySetInnerHTML={{
-//   __html: DOMPurify.sanitize(story, { USE_PROFILES: { html: true } }),
-// }}
-///>

@@ -7,15 +7,19 @@ import CardCSS from "./Card.module.css";
 const Card = React.forwardRef(({ story }, ref) => {
   const content = (
     <>
-      <Link to={`/story/${story.id}`} className={CardCSS.Title_link}>
-        {story.title.length < 51
-          ? story.title
-          : `${story.title.substring(0, 50)}...`}
-      </Link>
+      <span className={CardCSS.Link_span}>
+        <Link to={`/story/${story.id}`} className={CardCSS.Title_link}>
+          {story.title.length < 51
+            ? story.title
+            : `${story.title.substring(0, 50)}...`}
+        </Link>
+      </span>
 
-      <Link to={`/user/${story.uname}`} className={CardCSS.Author_link}>
-        {story.uname}
-      </Link>
+      <span className={CardCSS.Link_span}>
+        <Link to={`/user/${story.uname}`} className={CardCSS.Author_link}>
+          {story.uname}
+        </Link>
+      </span>
 
       <p
         dangerouslySetInnerHTML={{

@@ -1,0 +1,130 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  margin: 1.75rem;
+}
+
+.Container *::selection {
+  background-color: #36b37e;
+}
+
+.SubmitResultContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Submit_paragraph {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.Submit_paragraph__success {
+  color: #36b37e;
+}
+
+.Submit_paragraph__error {
+  color: #ff5630;
+}
+
+.CreateStory_field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.CreateStory_label {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.CreateStory_input {
+  padding-left: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-style: none;
+  outline: none;
+  border-radius: 4px;
+  color: #24292e;
+}
+
+.CreateStory_input__file {
+  color: #fff;
+}
+
+.CreateStory_error {
+  color: #ff5630;
+  margin: 0.25rem 0rem;
+  font-size: 1rem;
+}
+
+.CreateStory_count {
+  color: #fff;
+  margin: 0.25rem 0rem;
+  font-size: 1rem;
+}
+
+.CreateStory_count__error {
+  color: #ff5630;
+}
+
+.CreateStory_button {
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+.CreateStory_button__delete {
+  color: #24292e;
+  background-color: #ced2d6;
+  font-size: 1rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.CreateStory_button__delete:hover,
+.CreateStory_button__delete:focus,
+.CreateStory_button__delete:active {
+  background-color: #7f8790;
+  color: #f6f7f9;
+}
+
+.CreateStory_button__deleteDisabled {
+  background-color: #f6f7f9;
+  color: #fff;
+}
+
+.CreateStory_button__deleteDisabled:hover,
+.CreateStory_button__deleteDisabled:focus,
+.CreateStory_button__deleteDisabled:active {
+  background-color: #f6f7f9;
+  color: #fff;
+}
+
+.CreateStory_button__submit {
+  color: #fff;
+  background-color: #36b37e;
+  text-align: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  border-radius: 10px;
+}
+
+.CreateStory_button__submit:hover,
+.CreateStory_button__submit:focus,
+.CreateStory_button__submit:active {
+  background-color: #00875a;
+}
+
+.CreateStory_button__submitDisabled {
+  background-color: #abf5d1;
+}
+
+.CreateStory_button__submitDisabled:hover,
+.CreateStory_button__submitDisabled:focus,
+.CreateStory_button__submitDisabled:active {
+  background-color: #abf5d1;
+}

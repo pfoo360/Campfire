@@ -1,0 +1,35 @@
+.UploadImageError_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.UploadImageError_paragraph {
+  color: #ff5630;
+  margin: 0.25rem 0;
+}
+
+.Button_section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.UploadImageError_button {
+  border: none;
+  outline: none;
+  text-decoration: none;
+  color: #24292e;
+  background-color: #ced2d6;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  margin: 0 0.25rem;
+}
+
+.UploadImageError_button:hover,
+.UploadImageError_button:focus,
+.UploadImageError_button:active {
+  background-color: #7f8790;
+  color: #f6f7f9;
+}

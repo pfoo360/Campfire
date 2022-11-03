@@ -1,0 +1,73 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: auto;
+  margin: 0rem 1rem 1rem;
+  background-color: #454c52;
+  border-radius: 0 0 3px 3px;
+  height: 3rem;
+}
+
+.Container *::selection {
+  background-color: #36b37e;
+}
+
+.Home_link {
+  margin-left: 0.75rem;
+  font-size: 2rem;
+}
+
+.User_section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 0.75rem;
+}
+
+.UserGreeting_paragraph {
+  font-size: 1.25rem;
+  color: #f6f7f9;
+  margin: 0 0.25rem;
+}
+
+.Write_link {
+  font-size: 1rem;
+  margin: 0 1rem 0rem;
+  padding-bottom: 0.25rem;
+}
+
+.Login_link:link,
+.Login_link:visited {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #00a3bf;
+  padding: 0.25rem;
+  border-radius: 5px;
+}
+
+.Login_link:hover,
+.Login_link:active {
+  cursor: pointer;
+  background-color: #00c7e6;
+}
+
+.Logout_button {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.25rem;
+  color: #fff;
+  background-color: #00a3bf;
+  border-radius: 5px;
+}
+
+.Logout_button:hover,
+.Logout_button:focus,
+.Logout_button:active {
+  background-color: #00c7e6;
+  cursor: pointer;
+}

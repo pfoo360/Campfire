@@ -67,7 +67,7 @@ function LogInForm() {
             loginError: "Username and password is required",
           });
         } else {
-          setErrors({ loginError: "Login failed" });
+          setErrors({ loginError: "Log in failed" });
         }
         setSubmitting(false);
       }

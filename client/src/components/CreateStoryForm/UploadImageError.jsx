@@ -1,4 +1,5 @@
 import React from "react";
+import UploadImageErrorCSS from "./UploadImageError.module.css";
 
 const UploadImageError = ({
   submitWithNoImage,
@@ -17,14 +18,27 @@ const UploadImageError = ({
   };
 
   return (
-    <section>
-      <p>
+    <section className={UploadImageErrorCSS.UploadImageError_section}>
+      <p className={UploadImageErrorCSS.UploadImageError_paragraph}>
         Unable to upload image
-        <br />
+      </p>
+      <p className={UploadImageErrorCSS.UploadImageError_paragraph}>
         Continue to upload without image?
       </p>
-      <button onClick={handleSubmit}>upload without image</button>
-      <button onClick={handleCancel}>no thanks</button>
+      <div className={UploadImageErrorCSS.Button_section}>
+        <button
+          onClick={handleSubmit}
+          className={UploadImageErrorCSS.UploadImageError_button}
+        >
+          upload without image
+        </button>
+        <button
+          onClick={handleCancel}
+          className={UploadImageErrorCSS.UploadImageError_button}
+        >
+          no thanks
+        </button>
+      </div>
     </section>
   );
 };

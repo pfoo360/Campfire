@@ -55,6 +55,9 @@
   padding-left: 0.25rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+  border-style: none;
+  outline: none;
+  border-radius: 4px;
 }
 
 .LogInField_paragraph {

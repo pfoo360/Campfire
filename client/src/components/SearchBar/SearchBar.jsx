@@ -1,4 +1,5 @@
 import React from "react";
+import SearchBarCSS from "./SearchBar.module.css";
 
 const SearchBar = ({ setQuery, query, setPageNumber }) => {
   const onChangeHandler = (e) => {
@@ -6,7 +7,17 @@ const SearchBar = ({ setQuery, query, setPageNumber }) => {
     setQuery(e.target.value);
     setPageNumber(1);
   };
-  return <input type="text" value={query} onChange={onChangeHandler} />;
+  return (
+    <div className={SearchBarCSS.Container}>
+      <input
+        type="text"
+        value={query}
+        onChange={onChangeHandler}
+        placeholder={"find title or story..."}
+        className={SearchBarCSS.SearchBar_input}
+      />
+    </div>
+  );
 };
 
 export default SearchBar;

@@ -91,6 +91,12 @@
   padding-bottom: 1rem;
 }
 
-.Story::selection {
+.Story::selection,
+.Story *::selection {
   background-color: #36b37e;
+}
+
+.Loading {
+  color: #f6f7f9;
+  margin: 0.5rem 1rem;
 }
