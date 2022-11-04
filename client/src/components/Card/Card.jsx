@@ -15,11 +15,13 @@ const Card = React.forwardRef(({ story }, ref) => {
         </Link>
       </span>
 
-      <span className={CardCSS.Link_span}>
-        <Link to={`/user/${story.uname}`} className={CardCSS.Author_link}>
-          {story.uname}
-        </Link>
-      </span>
+      {story?.uname && (
+        <span className={CardCSS.Link_span}>
+          <Link to={`/user/${story.uname}`} className={CardCSS.Author_link}>
+            {story.uname}
+          </Link>
+        </span>
+      )}
 
       <p
         dangerouslySetInnerHTML={{
