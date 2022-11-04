@@ -1,51 +1,63 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import axios from "../../api/axios";
+import { useState, useRef, useCallback } from "react";
+import useUserPage from "../../hooks/useUserPage";
+import UserPageCSS from "./UserPage.module.css";
+import Card from "../Card/Card";
 
 const UserPage = () => {
-  const GET_STORIES_BY_USERNAME_URL = "/api/v1/story/user/";
   const { username } = useParams();
-  const effectRan = useRef(false);
-  const [stories, setStories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
 
-  useEffect(() => {
-    const controller = new AbortController();
+  const [stories, isLoading, isError, error, hasMore] = useUserPage({
+    username,
+    pageNumber,
+  });
 
-    const getStoriesByUsername = async () => {
-      try {
-        setIsLoading(true);
-        const result = await axios.get(
-          `${GET_STORIES_BY_USERNAME_URL}${username}`,
-          { signal: controller.signal }
-        );
-        console.log(result.data.stories);
-        setStories(result.data.stories);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-        setIsLoading(false);
+  const observer = useRef();
+  const lastStoryElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) {
+        observer.current.disconnect();
       }
-    };
-
-    if (effectRan.current === true || process.env.NODE_ENV !== "development") {
-      getStoriesByUsername();
-    }
-
-    return () => {
-      effectRan.current = true;
-      controller.abort();
-    };
-  }, [username]);
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prev) => prev + 1);
+        }
+      });
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [isLoading, hasMore]
+  );
 
   return (
-    <div>
-      {isLoading && <p>{`finding ${username}'s stories...`}</p>}
-      {username}
-      {!isLoading && !stories?.length ? (
-        <p>hmmm... there doesn't seem to be anything here...</p>
-      ) : (
-        JSON.stringify(stories)
+    <div className={UserPageCSS.Container}>
+      <h1 className={UserPageCSS.User_header}>{username}</h1>
+      {isError && (
+        <p className={UserPageCSS.Error}>
+          oops...looks like something went wrong
+        </p>
+      )}
+      {!stories.length && (
+        <p className={UserPageCSS.NoStories}>
+          there doesn't seem to be anything here...
+        </p>
+      )}
+      <div className={UserPageCSS.CardContainer}>
+        {stories.map((story, index) => {
+          if (stories.length === index + 1) {
+            return (
+              <Card ref={lastStoryElementRef} key={story.id} story={story} />
+            );
+          } else return <Card key={story.id} story={story} />;
+        })}
+      </div>
+      {isLoading && (
+        <p
+          className={UserPageCSS.Loading}
+        >{`finding ${username}'s stories...`}</p>
       )}
     </div>
   );

@@ -30,7 +30,7 @@ const getStories = async (req, res, next) => {
     const totalStoriesFound = count[0]["COUNT (*)"];
     const maxNumberOfPages = Math.ceil(totalStoriesFound / pageSize);
     const currentPage = parseInt(page);
-    res.json({
+    res.status(200).json({
       result,
       totalStoriesFound,
       currentPage,
@@ -45,15 +45,42 @@ const getStories = async (req, res, next) => {
   }
 };
 
-//@desc Takes in username from params and returns all stories by said username
-//@route GET /api/v1/story/user/:username
+//@desc Takes in username from params and returns stories by said username in a paginated manner
+//@route GET /api/v1/story/user/:username/:page
 const getUsersStories = async (req, res, next) => {
   try {
-    const { username } = req.params;
-    console.log(username);
-    const stories = await Story.getStoriesByUsername({ username });
-    console.log(stories);
-    res.status(200).json({ stories });
+    const { username, page } = req.params;
+    if (isNaN(page))
+      return res
+        .status(400)
+        .json({ status: "GET failure", message: "page is NaN" });
+
+    if (!username)
+      return res
+        .status(400)
+        .json({ status: "GET failure", message: "missing username" });
+
+    const PAGE_SIZE = 6; //how many stories per page
+    const offset = PAGE_SIZE * (page - 1);
+
+    const [result, count] = await Story.getStoriesByUsername({
+      username,
+      offset,
+      limit: PAGE_SIZE,
+    });
+    const totalStoriesFound = count[0]["COUNT (*)"];
+    const maxNumberOfPages = Math.ceil(totalStoriesFound / PAGE_SIZE);
+    const currentPage = parseInt(page);
+
+    res.status(200).json({
+      result,
+      totalStoriesFound,
+      currentPage,
+      pageSize: PAGE_SIZE,
+      storiesSkipped: offset,
+      maxNumberOfPages,
+      username,
+    });
   } catch (error) {
     console.log(error);
     next(error);

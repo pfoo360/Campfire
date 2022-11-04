@@ -1,7 +1,7 @@
 .Container {
   display: flex;
   flex-direction: column;
-  margin: 1.75rem;
+  margin: 1.75rem 2.25rem;
 }
 
 .Container *::selection {
@@ -53,10 +53,22 @@
   color: #fff;
 }
 
+.CreateStoryFileInputContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 .CreateStory_error {
   color: #ff5630;
   margin: 0.25rem 0rem;
   font-size: 1rem;
+}
+
+.CreateStory_countContainer {
+  padding-right: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .CreateStory_count {
@@ -77,28 +89,28 @@
 
 .CreateStory_button__delete {
   color: #24292e;
-  background-color: #ced2d6;
+  background-color: #ff5630;
   font-size: 1rem;
-  padding: 0.25rem;
-  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  margin: 0 0 0 0.5rem;
 }
 
 .CreateStory_button__delete:hover,
 .CreateStory_button__delete:focus,
 .CreateStory_button__delete:active {
-  background-color: #7f8790;
-  color: #f6f7f9;
+  background-color: #fe6442;
 }
 
 .CreateStory_button__deleteDisabled {
-  background-color: #f6f7f9;
+  background-color: #ffbdad;
   color: #fff;
 }
 
 .CreateStory_button__deleteDisabled:hover,
 .CreateStory_button__deleteDisabled:focus,
 .CreateStory_button__deleteDisabled:active {
-  background-color: #f6f7f9;
+  background-color: #ffbdad;
   color: #fff;
 }
 

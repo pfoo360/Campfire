@@ -1,0 +1,183 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  margin: 1.75rem 2.25rem;
+}
+
+.Container *::selection {
+  background-color: #36b37e;
+}
+
+.SubmitResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SubmitResult_paragraph {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.SubmitResult_paragraph__success {
+  color: #36b37e;
+}
+
+.SubmitResult_paragraph__failure {
+  color: #ff5630;
+}
+
+.EditStory_field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.EditStoryImageInputContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.EditStory_label {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.EditStory_input {
+  padding-left: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-style: none;
+  outline: none;
+  border-radius: 4px;
+  color: #24292e;
+}
+
+.EditStory_input__file {
+  color: #fff;
+  margin: 0 1rem 0 0;
+}
+
+.EditStory_error {
+  color: #ff5630;
+  margin: 0.25rem 0rem;
+  font-size: 1rem;
+}
+
+.EditStoryContainer {
+  margin: 0rem 0rem 0.75rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.EditStoryImageContainer {
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.EditStory_image {
+  max-height: 100%;
+}
+
+.ButtonsContainer {
+  margin: 0 0 0 1rem;
+}
+
+.EditStory_button {
+  border: none;
+  outline: none;
+  background: none;
+  color: #fff;
+  text-decoration: dotted;
+  background-color: #e6e7e9;
+  margin: 0 0.25rem;
+  border-radius: 10%;
+  padding: 0.25rem 0.5rem;
+}
+
+.EditStory_button:hover {
+  cursor: pointer;
+}
+
+.EditStory_button__red {
+  background-color: #ff5630;
+}
+
+.EditStory_button__red:hover,
+.EditStory_button__red:focus,
+.EditStory_button__red:active {
+  background-color: #ff7452;
+}
+
+.EditStory_button__redDisabled,
+.EditStory_button__redDisabled:hover,
+.EditStory_button__redDisabled:focus,
+.EditStory_button__redDisabled:active {
+  background-color: #ffbdad;
+  cursor: default;
+}
+
+.EditStory_button__green {
+  background-color: #00875a;
+}
+
+.EditStory_button__green:hover,
+.EditStory_button__green:focus,
+.EditStory_button__green:active {
+  background-color: #36b37e;
+}
+
+.EditStory_button__greenDisabled,
+.EditStory_button__greenDisabled:hover,
+.EditStory_button__greenDisabled:focus,
+.EditStory_button__greenDisabled:active {
+  background-color: #abf5d1;
+  cursor: default;
+}
+
+.EditStory_button__submit {
+  color: #fff;
+  background-color: #36b37e;
+  text-align: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  border-radius: 10px;
+}
+
+.EditStory_button__submit:hover,
+.EditStory_button__submit:focus,
+.EditStory_button__submit:active {
+  background-color: #00875a;
+}
+
+.EditStory_button__submitDisabled,
+.EditStory_button__submitDisabled:hover,
+.EditStory_button__submitDisabled:focus,
+.EditStory_button__submitDisabled:active {
+  background-color: #abf5d1;
+  cursor: default;
+}
+
+.EditStory_countContainer {
+  padding-right: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.EditStory_count {
+  color: #fff;
+  margin: 0.25rem 0rem;
+  font-size: 1rem;
+}
+
+.EditStory_count__error {
+  color: #ff5630;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
@@ -6,13 +6,14 @@ import useAuth from "../../hooks/useAuth";
 import DeleteStory from "./DeleteStory";
 import * as DOMPurify from "dompurify";
 import SingleStoryCSS from "./SingleStory.module.css";
-//import image2 from "../../../../uploads/1665037305674--7ee44dc2-63b3-4253-a003-d3d68b537667.jpg";
 
 const SingleStory = () => {
   const STORY_URL = "/api/v1/story/";
   const [story, setStory] = useState({});
   const [openDeleteDialogBox, setOpenDeleteDialogBox] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleteAndEditButtonDisabled, setIsDeleteAndEditButtonDisabled] =
+    useState(false);
 
   const effectRan = useRef(false);
 
@@ -30,19 +31,11 @@ const SingleStory = () => {
         const story = await axios.get(`${STORY_URL}${story_id}`, {
           signal: controller.signal,
         });
-        console.log(story);
-        // console.log(auth?.userInfo?.id);
-        // console.log(story.data.result[0].uid);
-        // console.log(story.data.result[0].uid === auth?.userInfo?.id);
-        //console.log(story);
+
         let image;
-        //console.log("result", story.data.result[0]);
-        //console.log("result", story.data.result[0].image);
         if (story.data.result[0].image) {
-          //console.log(`../../uploads/${story.data.result[0].image}`);
           image = require(`../../uploads/${story.data.result[0].image}`);
         }
-        //console.log(image);
         setStory({
           ...story.data.result[0],
           date: format(
@@ -66,32 +59,11 @@ const SingleStory = () => {
       effectRan.current = true;
       controller.abort();
     };
-  }, []);
+  }, [auth?.userInfo?.id, story_id]);
 
   const attemptToDelete = () => {
     setOpenDeleteDialogBox(true);
   };
-
-  // const [arr, setArr] = useState([1, 2, 3]);
-  // const add = () => {
-  //   console.log(123);
-  //   setArr((prev) => [...prev, arr.length + 1]);
-  //   console.log(456);
-  // };
-
-  // const hello = () => {
-  //   console.log(78);
-  //   console.log("hello");
-  //   console.log(89);
-  // };
-  // const test = "sdf";
-  // const last = useCallback(
-  //   (node) => {
-  //     console.log(node);
-  //     console.log("sdfsdfdf");
-  //   },
-  //   [test]
-  // );
 
   return (
     <>
@@ -100,6 +72,7 @@ const SingleStory = () => {
         <DeleteStory
           id={story.id}
           setOpenDeleteDialogBox={setOpenDeleteDialogBox}
+          setIsDeleteAndEditButtonDisabled={setIsDeleteAndEditButtonDisabled}
         />
       )}
       <h1 className={SingleStoryCSS.Title}>{story.title}</h1>
@@ -110,13 +83,23 @@ const SingleStory = () => {
         <>
           <button
             onClick={attemptToDelete}
-            className={SingleStoryCSS.DeleteButton}
+            disabled={isDeleteAndEditButtonDisabled}
+            className={`${SingleStoryCSS.DeleteButton} ${
+              isDeleteAndEditButtonDisabled
+                ? SingleStoryCSS.DeleteButtonDisabled
+                : ""
+            }`}
           >
             🗑️
           </button>{" "}
           <button
             onClick={() => navigate("/edit", { state: { story } })}
-            className={SingleStoryCSS.EditButton}
+            disabled={isDeleteAndEditButtonDisabled}
+            className={`${SingleStoryCSS.EditButton} ${
+              isDeleteAndEditButtonDisabled
+                ? SingleStoryCSS.EditButtonDisabled
+                : ""
+            }`}
           >
             📝
           </button>

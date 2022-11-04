@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.Container *::selection {
+  background-color: #36b37e;
+}
+
 .Delete_paragraph {
   color: #fff;
   margin: 0.25rem 0;
@@ -22,12 +26,36 @@
   outline: none;
   color: #fff;
   padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
   border-radius: 10%;
 }
 
 .Delete_button__yes {
   background-color: #ff5630;
 }
+
+.Delete_button__yes:hover {
+  background-color: #ff7452;
+}
+
+.Delete_button__yesDisabled,
+.Delete_button__yesDisabled:hover,
+.Delete_button__yesDisabled:focus,
+.Delete_button__yesDisabled:active {
+  background-color: #ffbdad;
+}
+
 .Delete_button__no {
   background-color: #00875a;
+}
+
+.Delete_button__no:hover {
+  background-color: #36b37e;
+}
+
+.Delete_button__noDisabled,
+.Delete_button__noDisabled:hover,
+.Delete_button__noDisabled:focus,
+.Delete_button__noDisabled:active {
+  background-color: #abf5d1;
 }

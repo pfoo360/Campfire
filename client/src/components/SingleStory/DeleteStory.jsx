@@ -4,8 +4,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import DeleteStoryCSS from "./DeleteStory.module.css";
 
-//DELETE story URL: /api/v1/story/:id
-const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
+const DeleteStory = ({
+  id,
+  setOpenDeleteDialogBox,
+  setIsDeleteAndEditButtonDisabled,
+}) => {
   const DELETE_URL = "/api/v1/story/";
   const axiosPrivate = useAxiosPrivate();
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -21,14 +24,13 @@ const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
     setDeleteError("");
     try {
       setButtonDisabled(true);
+      setIsDeleteAndEditButtonDisabled(true);
       const response = await axiosPrivate.delete(`${DELETE_URL}${id}`);
-      console.log("delete response", response);
       setDeleteSuccess(true);
       setTimeout(() => {
         navigate("/");
       }, 1000);
     } catch (error) {
-      console.log("delete error", error);
       //403= forbidden bc access token not valid/expired
       //403=story found in db but does not match with userinfo sent by user
       //404 not found in db
@@ -49,6 +51,7 @@ const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
         setDeleteError("Delete failed");
       }
       setButtonDisabled(false);
+      setIsDeleteAndEditButtonDisabled(false);
       //setOpenDeleteDialogBox(false);
     }
   };
@@ -79,14 +82,18 @@ const DeleteStory = ({ id, setOpenDeleteDialogBox }) => {
         <button
           onClick={deleteStory}
           disabled={buttonDisabled}
-          className={`${DeleteStoryCSS.Delete_button} ${DeleteStoryCSS.Delete_button__yes}`}
+          className={`${DeleteStoryCSS.Delete_button} ${
+            DeleteStoryCSS.Delete_button__yes
+          } ${buttonDisabled ? DeleteStoryCSS.Delete_button__yesDisabled : ""}`}
         >
           delete
-        </button>{" "}
+        </button>
         <button
           onClick={doNotDeleteStory}
           disabled={buttonDisabled}
-          className={`${DeleteStoryCSS.Delete_button} ${DeleteStoryCSS.Delete_button__no}`}
+          className={`${DeleteStoryCSS.Delete_button} ${
+            DeleteStoryCSS.Delete_button__no
+          } ${buttonDisabled ? DeleteStoryCSS.Delete_button__noDisabled : ""}`}
         >
           no
         </button>

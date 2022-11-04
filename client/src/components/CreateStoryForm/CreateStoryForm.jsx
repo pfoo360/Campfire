@@ -94,7 +94,6 @@ function CreateStoryForm() {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(response);
       setSubmitSuccess("Submit success");
       localStorage.removeItem("title");
       localStorage.removeItem("story");
@@ -133,7 +132,7 @@ function CreateStoryForm() {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("submitwithnoimage", response);
+
       setSubmitSuccess("Submit success");
       localStorage.removeItem("title");
       localStorage.removeItem("story");
@@ -215,6 +214,7 @@ function CreateStoryForm() {
             value={title}
             onBlur={(e) => setTitleBlur(true)}
             onChange={(e) => setTitle(e.target.value)}
+            disabled={isSubmitting}
             required
             className={CreateStoryFormCSS.CreateStory_input}
           />
@@ -224,43 +224,49 @@ function CreateStoryForm() {
         </div>
 
         <div className={CreateStoryFormCSS.CreateStory_field}>
-          <input
-            type="file"
-            id="file"
-            name="file"
-            ref={imageInputRef}
-            onChange={handleFile}
-            className={`${CreateStoryFormCSS.CreateStory_input} ${CreateStoryFormCSS.CreateStory_input__file}`}
-          />
-          {file && (
-            <button
-              onClick={clearFile}
+          <div className={CreateStoryFormCSS.CreateStoryFileInputContainer}>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              ref={imageInputRef}
               disabled={isSubmitting}
-              className={`${CreateStoryFormCSS.CreateStory_button} ${
-                CreateStoryFormCSS.CreateStory_button__delete
-              } ${
-                isSubmitting
-                  ? CreateStoryFormCSS.CreateStory_button__deleteDisabled
-                  : ""
-              }`}
-            >
-              delete
-            </button>
-          )}
+              onChange={handleFile}
+              className={`${CreateStoryFormCSS.CreateStory_input} ${CreateStoryFormCSS.CreateStory_input__file}`}
+            />
+            {file && (
+              <button
+                onClick={clearFile}
+                disabled={isSubmitting}
+                className={`${CreateStoryFormCSS.CreateStory_button} ${
+                  CreateStoryFormCSS.CreateStory_button__delete
+                } ${
+                  isSubmitting
+                    ? CreateStoryFormCSS.CreateStory_button__deleteDisabled
+                    : ""
+                }`}
+              >
+                🗑️
+              </button>
+            )}
+          </div>
         </div>
 
         <div className={CreateStoryFormCSS.CreateStory_field}>
-          <p
-            className={`${CreateStoryFormCSS.CreateStory_count} ${
-              story.length > 9999
-                ? CreateStoryFormCSS.CreateStory_count__error
-                : ""
-            }`}
-          >{`${story.length}/9999`}</p>
+          <div className={CreateStoryFormCSS.CreateStory_countContainer}>
+            <p
+              className={`${CreateStoryFormCSS.CreateStory_count} ${
+                story.length > 9999
+                  ? CreateStoryFormCSS.CreateStory_count__error
+                  : ""
+              }`}
+            >{`${story.length}/9999`}</p>
+          </div>
           <TextEditor
             story={story}
             setStory={setStory}
             setStoryBlur={setStoryBlur}
+            disablingBoolean={isSubmitting}
           />
           {storyBlur && storyError && (
             <p className={CreateStoryFormCSS.CreateStory_error}>{storyError}</p>
@@ -268,17 +274,11 @@ function CreateStoryForm() {
         </div>
         <button
           type="submit"
-          disabled={
-            isSubmitting ||
-            (titleBlur && titleError) ||
-            (storyBlur && storyError)
-          }
+          disabled={isSubmitting || titleError || storyError}
           className={`${CreateStoryFormCSS.CreateStory_button} ${
             CreateStoryFormCSS.CreateStory_button__submit
           } ${
-            isSubmitting ||
-            (titleBlur && titleError) ||
-            (storyBlur && storyError)
+            isSubmitting || titleError || storyError
               ? CreateStoryFormCSS.CreateStory_button__submitDisabled
               : ""
           }`}

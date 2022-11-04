@@ -1,21 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import axios from "../../api/axios";
+import React, { useState, useRef, useCallback } from "react";
 import Card from "../Card/Card";
 import SearchBar from "../SearchBar/SearchBar";
-import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import useLogout from "../../hooks/useLogout";
 import useStories from "../../hooks/useStories";
 import StoriesCSS from "./Stories.module.css";
 
 const Stories = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
-
-  const auth = useAuth();
-  const navigate = useNavigate();
-
-  const logout = useLogout();
 
   const [stories, isLoading, isError, error, hasMore] = useStories({
     query,
@@ -41,17 +32,8 @@ const Stories = () => {
     [isLoading, hasMore]
   );
 
-  const btn = async (e) => {
-    e.preventDefault();
-    const result = await axios.get("/api/v1/story/user/coolguy123");
-    console.log(result);
-  };
-
   return (
     <div className={StoriesCSS.Container}>
-      {/*<button onClick={() => navigate("/register")}>register</button>
-      <button onClick={() => navigate("/edit")}>edit</button>
-  <button onClick={btn}>user</button>*/}
       <SearchBar
         setQuery={setQuery}
         query={query}
@@ -59,6 +41,11 @@ const Stories = () => {
       />
       <div className={StoriesCSS.StoriesFlexBox}>
         {isLoading ? <p className={StoriesCSS.Loading}>loading...</p> : null}
+        {isError ? (
+          <p className={StoriesCSS.Error}>
+            oops... looks like something went wrong
+          </p>
+        ) : null}
 
         {stories.map((story, index) => {
           if (stories.length === index + 1) {

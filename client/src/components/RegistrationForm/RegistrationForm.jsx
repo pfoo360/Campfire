@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import RegistrationFormCSS from "./RegistrationForm.module.css";
 
 const RegistrationForm = () => {
   const REGISTRATION_URL = "/api/v1/user";
+
+  const navigate = useNavigate();
 
   const [registrationSuccess, setRegistrationSuccess] = useState("");
 
@@ -71,11 +73,11 @@ const RegistrationForm = () => {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
-        console.log(response);
+        //console.log(response);
         setRegistrationSuccess("Registration successful");
         onSubmitProps.resetForm();
         onSubmitProps.setSubmitting(true);
-        //to do: navigate to login page since registration was successful
+        navigate("/login");
       } catch (error) {
         if (!error?.response) {
           onSubmitProps.setErrors({ registrationError: "No server response" });
@@ -96,7 +98,7 @@ const RegistrationForm = () => {
             registrationError: "Registration failed",
           });
         }
-        console.log(error);
+        //console.log(error);
         onSubmitProps.setSubmitting(false);
       }
     };
@@ -107,7 +109,11 @@ const RegistrationForm = () => {
     <div className={RegistrationFormCSS.Container}>
       <section className={RegistrationFormCSS.Registration}>
         <h1 className={RegistrationFormCSS.Registration_header}>Register</h1>
-        {registrationSuccess && <p>{registrationSuccess}</p>}
+        {registrationSuccess && (
+          <p className={RegistrationFormCSS.RegistrationSuccess}>
+            {registrationSuccess}
+          </p>
+        )}
         <Formik
           initialValues={initialValues}
           validate={validate}
@@ -117,7 +123,13 @@ const RegistrationForm = () => {
             return (
               <Form className={RegistrationFormCSS.Registration_form}>
                 {formik.errors.registrationError && (
-                  <p>{formik.errors.registrationError}</p>
+                  <div
+                    className={RegistrationFormCSS.RegistrationErrorContainer}
+                  >
+                    <p className={RegistrationFormCSS.RegistrationError}>
+                      {formik.errors.registrationError}
+                    </p>
+                  </div>
                 )}
                 <div className={RegistrationFormCSS.Registration_field}>
                   <label
@@ -228,7 +240,11 @@ const RegistrationForm = () => {
                 <button
                   type="submit"
                   disabled={formik.isSubmitting}
-                  className={RegistrationFormCSS.Registration_button}
+                  className={`${RegistrationFormCSS.Registration_button} ${
+                    formik.isSubmitting
+                      ? RegistrationFormCSS.Registration_button__disabled
+                      : ""
+                  }`}
                 >
                   Sign Up
                 </button>

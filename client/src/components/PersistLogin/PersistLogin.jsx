@@ -2,12 +2,13 @@ import { Outlet } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import useAuth from "../../hooks/useAuth";
+import PersistLoginCSS from "./PersistLogin.module.css";
 
 const PersistLogin = () => {
   const effectRan = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
@@ -32,11 +33,17 @@ const PersistLogin = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("persist", auth);
-  }, [auth, isLoading]);
-
-  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+  return (
+    <>
+      {isLoading ? (
+        <div className={PersistLoginCSS.Container}>
+          <p className={PersistLoginCSS.Loading}>Loading...</p>
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </>
+  );
 };
 
 export default PersistLogin;

@@ -6,13 +6,27 @@
   align-items: center;
 }
 
+.RegistrationSuccess {
+  color: #00875a;
+}
+
+.RegistrationErrorContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.RegistrationError {
+  color: #ff5630;
+}
+
 .Registration {
   background-color: #454c52;
   border-radius: 10px;
   color: #fff;
   margin: 10% auto;
   padding: 5%;
-  width: 85%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,6 +102,13 @@
 .Registration_button:focus,
 .Registration_button:active {
   background-color: #00875a;
+}
+
+.Registration_button__disabled,
+.Registration_button__disabled:hover,
+.Registration_button__disabled:focus,
+.Registration_button__disabled:active {
+  background-color: #abf5d1;
 }
 
 .RegistrationRedirect {

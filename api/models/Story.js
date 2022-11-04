@@ -32,7 +32,7 @@ class Story {
   }
 
   static async getStories(payload) {
-    // other methods to use
+    // other methods to use:
     // "SELECT * FROM stories JOIN (SELECT COUNT(*) FROM stories WHERE story LIKE '%nulla%') counted WHERE story LIKE '%nulla%' LIMIT 0,3";
 
     // "SELECT SQL_CALC_FOUND_ROWS * FROM stories WHERE story LIKE '%nulla%' LIMIT 0,3";
@@ -41,40 +41,44 @@ class Story {
     // `SELECT * FROM stories WHERE story LIKE '%nulla%' LIMIT 0, 3`
     // `SELECT COUNT(*) FROM stories WHERE  story LIKE '%nulla%'`
 
-    const { where, offset, limit } = payload;
-    let result, count;
-    //console.log(where, where?.title, where?.story, offset, limit);
+    try {
+      const { where, offset, limit } = payload;
+      let result, count;
+      //console.log(where, where?.title, where?.story, offset, limit);
 
-    if (where?.title || where?.story) {
-      const resultQ = `SELECT * FROM stories WHERE ${
-        where.title && where.story
-          ? `story LIKE '%${where.story}%' OR title LIKE '%${where.title}%'`
-          : where.story
-          ? `story LIKE '%${where.story}%'`
-          : `title LIKE '%${where.title}%'`
-      } ORDER BY date DESC LIMIT ${offset}, ${limit}`;
+      if (where?.title || where?.story) {
+        const resultQ = `SELECT * FROM stories WHERE ${
+          where.title && where.story
+            ? `story LIKE '%${where.story}%' OR title LIKE '%${where.title}%'`
+            : where.story
+            ? `story LIKE '%${where.story}%'`
+            : `title LIKE '%${where.title}%'`
+        } ORDER BY date DESC LIMIT ${offset}, ${limit}`;
 
-      const countQ = `SELECT COUNT (*) FROM stories WHERE ${
-        where.title && where.story
-          ? `story LIKE '%${where.story}%' OR title LIKE '%${where.title}%'`
-          : where.story
-          ? `story LIKE '%${where.story}%'`
-          : `title LIKE '%${where.title}%'`
-      }`;
+        const countQ = `SELECT COUNT (*) FROM stories WHERE ${
+          where.title && where.story
+            ? `story LIKE '%${where.story}%' OR title LIKE '%${where.title}%'`
+            : where.story
+            ? `story LIKE '%${where.story}%'`
+            : `title LIKE '%${where.title}%'`
+        }`;
 
-      [result, count] = await Promise.all([
-        db.execute(resultQ),
-        db.execute(countQ),
-      ]);
-      return [result[0], count[0]];
-    } else {
-      [result, count] = await Promise.all([
-        db.execute(
-          `SELECT * FROM stories ORDER BY date DESC LIMIT ${offset}, ${limit}`
-        ),
-        db.execute("SELECT COUNT (*) FROM stories"),
-      ]);
-      return [result[0], count[0]];
+        [result, count] = await Promise.all([
+          db.execute(resultQ),
+          db.execute(countQ),
+        ]);
+        return [result[0], count[0]];
+      } else {
+        [result, count] = await Promise.all([
+          db.execute(
+            `SELECT * FROM stories ORDER BY date DESC LIMIT ${offset}, ${limit}`
+          ),
+          db.execute("SELECT COUNT (*) FROM stories"),
+        ]);
+        return [result[0], count[0]];
+      }
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -88,12 +92,17 @@ class Story {
     }
   }
 
-  static async getStoriesByUsername({ username }) {
+  static async getStoriesByUsername({ username, offset, limit }) {
     try {
-      const q =
-        "SELECT stories.title, stories.story, stories.date FROM stories WHERE uid IN (SELECT users.id FROM users WHERE users.username = ?)";
-      const [result, column] = await db.execute(q, [username]);
-      return result;
+      const resultQ = `SELECT stories.id, stories.title, stories.story, stories.date FROM stories WHERE uid IN (SELECT users.id FROM users WHERE users.username = ?) ORDER BY date DESC LIMIT ${offset} , ${limit}`;
+
+      const countQ = `SELECT COUNT (*) FROM stories where uid IN (SELECT users.id FROM users WHERE users.username = ?)`;
+
+      const [result, count] = await Promise.all([
+        db.execute(resultQ, [username]),
+        db.execute(countQ, [username]),
+      ]);
+      return [result[0], count[0]];
     } catch (err) {
       throw err;
     }

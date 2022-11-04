@@ -51,7 +51,7 @@ function useStories({ query, pageNumber }) {
               signal: controller.signal,
             }
           );
-          console.log(data);
+
           isMounted && setStories((prev) => [...prev, ...data.result]);
           isMounted && setHasMore(data.currentPage < data.maxNumberOfPages);
           isMounted && setIsLoading(false);

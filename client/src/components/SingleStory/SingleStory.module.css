@@ -2,7 +2,7 @@
   color: #fff;
   font-size: 3rem;
   word-wrap: break-word;
-  margin: 0rem 1rem;
+  margin: 0rem 2rem;
 }
 
 .Title::selection {
@@ -13,7 +13,7 @@
 .Author:visited {
   text-decoration: none;
   color: #676e76;
-  margin: 0rem 1rem 1rem;
+  margin: 0rem 2rem 1rem;
 }
 
 .Author:hover,
@@ -21,7 +21,6 @@
   text-decoration: none;
   color: #fff;
   cursor: pointer;
-  margin: 0rem 1rem 1rem;
 }
 
 .Author::selection {
@@ -38,6 +37,17 @@
   border-radius: 10%;
 }
 
+.DeleteButton:hover {
+  background-color: #ff7452;
+}
+
+.DeleteButtonDisabled,
+.DeleteButtonDisabled:hover,
+.DeleteButtonDisabled:focus,
+.DeleteButtonDisabled:active {
+  background-color: #ffbdad;
+}
+
 .EditButton {
   border: none;
   outline: none;
@@ -48,15 +58,21 @@
   border-radius: 10%;
 }
 
-.DeleteButton:hover,
 .EditButton:hover {
-  cursor: pointer;
+  background-color: #36b37e;
+}
+
+.EditButtonDisabled,
+.EditButtonDisabled:hover,
+.EditButtonDisabled:focus,
+.EditButtonDisabled:active {
+  background-color: #abf5d1;
 }
 
 .Date {
   color: #676e76;
   font-size: 0.75rem;
-  margin: 1rem 1rem;
+  margin: 1rem 2rem;
 }
 
 .Date::selection {
@@ -64,7 +80,8 @@
 }
 
 .ImgContainer {
-  margin: 0rem 1rem 0.75rem;
+  padding: 0 4rem;
+  margin: 0rem 2rem 0.75rem;
   width: auto;
   display: flex;
   flex-direction: column;
@@ -85,7 +102,7 @@
 }
 
 .Story {
-  margin: 0.75rem 1rem 0rem;
+  margin: 0.75rem 2rem 0rem;
   word-wrap: break-word;
   color: #fff;
   padding-bottom: 1rem;
@@ -98,5 +115,5 @@
 
 .Loading {
   color: #f6f7f9;
-  margin: 0.5rem 1rem;
+  margin: 0.5rem 2rem;
 }

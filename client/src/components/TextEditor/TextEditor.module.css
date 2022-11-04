@@ -1,0 +1,10 @@
+.Container {
+  background-color: #e5e7ea;
+  text-align: center;
+  color: #24292e;
+  margin-top: 0.75rem;
+}
+
+.Container::selection {
+  background-color: #36b37e;
+}

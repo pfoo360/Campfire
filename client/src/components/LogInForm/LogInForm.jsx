@@ -12,12 +12,11 @@ function LogInForm() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("login form location", location);
+
   const from = location.state?.from?.pathname || "/";
   //if being sent to /login from /edit, we send the updating story to /login
   //we need to pass the same updating story on redirect to /edit
   const story = location.state?.from?.state?.story;
-  console.log("login form story", story);
 
   const initialValues = {
     username: "",
@@ -49,15 +48,13 @@ function LogInForm() {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
-        console.log(response);
+        //console.log(response);
         setSubmitting(true);
         const accessToken = response?.data?.accessToken;
         const userInfo = response?.data?.userInfo;
         setAuth({ userInfo, accessToken });
-        console.log("from", from);
         navigate(from, { state: { story }, replace: true });
       } catch (error) {
-        console.log(error);
         if (!error?.response) {
           setErrors({ loginError: "No server response" });
         } else if (error.response?.status === 401) {
@@ -134,7 +131,9 @@ function LogInForm() {
           <button
             type="submit"
             disabled={formik.isSubmitting}
-            className={LogInFormCSS.LogIn_button}
+            className={`${LogInFormCSS.LogIn_button} ${
+              formik.isSubmitting ? LogInFormCSS.LogIn_button__disabled : ""
+            }`}
           >
             Log In
           </button>

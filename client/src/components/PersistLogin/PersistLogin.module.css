@@ -1,0 +1,9 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem 1rem;
+}
+
+.Loading {
+  color: #f6f7f9;
+}

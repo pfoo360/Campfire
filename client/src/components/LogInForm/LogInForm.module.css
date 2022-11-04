@@ -10,9 +10,9 @@
   background-color: #454c52;
   border-radius: 10px;
   color: #fff;
-  margin: 40% auto;
+  margin: auto auto;
   padding: 5%;
-  width: 85%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,6 +85,13 @@
 .LogIn_button:focus,
 .LogIn_button:active {
   background-color: #00875a;
+}
+
+.LogIn_button__disabled,
+.LogIn_button__disabled:hover,
+.LogIn_button__disabled:focus,
+.LogIn_button__disabled:active {
+  background-color: #abf5d1;
 }
 
 .LogInRedirect {

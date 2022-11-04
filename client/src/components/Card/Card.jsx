@@ -54,10 +54,3 @@ const Card = React.forwardRef(({ story }, ref) => {
 });
 
 export default Card;
-
-//title: 255, story: 9999
-//<div
-// dangerouslySetInnerHTML={{
-//   __html: DOMPurify.sanitize(story, { USE_PROFILES: { html: true } }),
-// }}
-///>

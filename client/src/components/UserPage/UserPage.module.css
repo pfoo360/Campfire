@@ -1,0 +1,33 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Container *::selection {
+  background-color: #36b37e;
+}
+
+.User_header {
+  color: #f6f7f9;
+  font-size: 3rem;
+  margin: 1rem;
+}
+
+.Loading {
+  color: #f6f7f9;
+}
+
+.Error {
+  color: #ff5630;
+}
+
+.NoStories {
+  color: #f6f7f9;
+}
+
+.CardContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
