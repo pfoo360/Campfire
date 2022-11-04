@@ -42,7 +42,7 @@ const UserPage = () => {
       )}
       {!stories.length && (
         <p className={UserPageCSS.NoStories}>
-          there doesn't seem to be anything here...
+          there doesn't seem to be anything here yet...
         </p>
       )}
       <div className={UserPageCSS.CardContainer}>
