@@ -14,6 +14,7 @@ const useUserPage = ({ username, pageNumber }) => {
   const [hasMore, setHasMore] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState({});
+  const [apiSuccessfullyCalled, setApiSuccessfullyCalled] = useState(false);
 
   useEffect(() => {
     isMountedRefOne.current = true;
@@ -39,11 +40,12 @@ const useUserPage = ({ username, pageNumber }) => {
 
     const getStoriesByUsername = async () => {
       try {
+        setApiSuccessfullyCalled(false);
         const result = await axios.get(
           `${GET_STORIES_BY_USERNAME_URL}/${username}/${pageNumber}`,
           { signal: controller.signal }
         );
-
+        setApiSuccessfullyCalled(true);
         isMountedRefTwo.current &&
           setStories((prev) => [...prev, ...result.data.result]);
         isMountedRefTwo.current &&
@@ -71,7 +73,7 @@ const useUserPage = ({ username, pageNumber }) => {
     };
   }, [username, pageNumber]);
 
-  return [stories, isLoading, isError, error, hasMore];
+  return [stories, isLoading, isError, error, hasMore, apiSuccessfullyCalled];
 };
 
 export default useUserPage;

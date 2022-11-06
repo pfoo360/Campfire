@@ -8,10 +8,11 @@ const UserPage = () => {
   const { username } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [stories, isLoading, isError, error, hasMore] = useUserPage({
-    username,
-    pageNumber,
-  });
+  const [stories, isLoading, isError, error, hasMore, apiSuccessfullyCalled] =
+    useUserPage({
+      username,
+      pageNumber,
+    });
 
   const observer = useRef();
   const lastStoryElementRef = useCallback(
@@ -40,7 +41,7 @@ const UserPage = () => {
           oops...looks like something went wrong
         </p>
       )}
-      {!stories.length && (
+      {!isLoading && apiSuccessfullyCalled && !stories.length && (
         <p className={UserPageCSS.NoStories}>
           there doesn't seem to be anything here yet...
         </p>
