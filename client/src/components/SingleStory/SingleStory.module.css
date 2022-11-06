@@ -117,3 +117,14 @@
   color: #f6f7f9;
   margin: 0.5rem 2rem;
 }
+
+.ErrorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Error {
+  color: #f6f7f9;
+  font-size: 1.5rem;
+  margin: 0.5rem 2rem;
+}
