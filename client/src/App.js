@@ -10,12 +10,13 @@ import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PersistLogin from "./components/PersistLogin/PersistLogin";
 import UserPage from "./components/UserPage/UserPage";
 import NavBar from "./components/NavBar/NavBar";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   return (
     <Routes>
       <Route element={<PersistLogin />}>
-        {/*if user is signed in, and tries to access these, redirect them to home*/}
+        {/* if user is signed in, and tries to access these, redirect them to home */}
         <Route element={<CheckAuth />}>
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/login" element={<LogInForm />} />
@@ -24,14 +25,16 @@ function App() {
         <Route path="/" element={<NavBar />}>
           <Route path="/" element={<Stories />} />
           <Route path="/story/:story_id" element={<SingleStory />} />
-
           <Route path="/user/:username" element={<UserPage />} />
 
-          {/*Protected routes*/}
+          {/* Protected routes */}
           <Route element={<RequireAuth />}>
             <Route path="/write" element={<CreateStoryForm />} />
             <Route path="/edit" element={<EditStoryForm />} />
           </Route>
+
+          {/* 404 page */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Route>
     </Routes>

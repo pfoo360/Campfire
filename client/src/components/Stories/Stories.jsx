@@ -40,7 +40,6 @@ const Stories = () => {
         setPageNumber={setPageNumber}
       />
       <div className={StoriesCSS.StoriesFlexBox}>
-        {isLoading ? <p className={StoriesCSS.Loading}>loading...</p> : null}
         {isError ? (
           <p className={StoriesCSS.Error}>
             oops... looks like something went wrong
@@ -54,6 +53,8 @@ const Stories = () => {
             );
           } else return <Card key={story.id} story={story} />;
         })}
+
+        {isLoading ? <p className={StoriesCSS.Loading}>loading...</p> : null}
       </div>
     </div>
   );
