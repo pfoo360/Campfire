@@ -4,8 +4,7 @@
 
 # What does the app do?
 
-Visitors can read and search for user-generated stories
-Users that sign up can create, update and delete their own stories
+Visitors can read and search for user-generated stories. Users that sign up can create, update and delete their own stories!
 
 # Features
 
