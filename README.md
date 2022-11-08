@@ -138,6 +138,7 @@ On failure of edit story, an error message will be displayed on top and users ca
 
 On success of edit story, a success message will be displayed on top and users will be taken back to the home screen. <br/>
 ![edit_story_success](/READMEscreenshots/editStorySuccess.png)
+![edit_story_result](/READMEscreenshots/editStoryResult.png)
 <br/>
 <br/>
 
