@@ -68,7 +68,7 @@ Visitors can come and read all user-generated content. Infinite scrolling is use
 <br/>
 <br/>
 
-View from a mobile device (iPhone Pro 12)
+View from a mobile device (iPhone Pro 12) <br/>
 ![mobile_version](/READMEscreenshots/iPhone12ProMobile.png)
 <br/>
 <br/>
