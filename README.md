@@ -7,7 +7,7 @@
 
 # What does the app do?
 
-Visitors can search for and read user-generated content. People that sign up can create, update and delete their own content! [Click here for a more in-depth walkthrough](#walkthrough)
+Visitors can search for and read user-generated content. People that sign up can create, update and delete their own content! [Click here for a walkthrough](#walkthrough)
 
 # Features
 
@@ -62,3 +62,94 @@ Visitors can search for and read user-generated content. People that sign up can
 - And much more!
 
 # Walkthrough
+
+Visitors can come and read all user-generated content. Infinite scrolling is used for pagination.
+![home_page_logged_out](/READMEscreenshots/loggedOutHomePage.png)
+<br/>
+<br/>
+
+View from a mobile device (iPhone Pro 12)
+![mobile_version](/READMEscreenshots/iPhone12ProMobile.png)
+<br/>
+<br/>
+
+If a visitor would like to submit content, they will need to register first.
+![registration_page](/READMEscreenshots/registrationPage.png)
+<br/>
+<br/>
+
+Formik components were used for validation and error handling.
+![registration_page_validation_error](/READMEscreenshots/registrationPageFormValidation.png)
+<br/>
+<br/>
+
+Once registered, they will be able to log in (Formik hooks were used for validation and error handling).
+![login_page](/READMEscreenshots/logInPageFormValidation.png)
+<br/>
+<br/>
+
+Upon successful log in, they will be able to submit their own content by clicking the emoji/icon next to the logout button.
+![home_page_logged_in](/READMEscreenshots/loggedInHomePage.png)
+<br/>
+<br/>
+
+Here, they can submit a title(required) and a story(required). React-quill provides a rich-text editor and the toolbar was customized a little to suit the project's need. Users can also submit a picture to go along with their story(optional).
+![create_story](/READMEscreenshots/createStoryPage.png)
+<br/>
+<br/>
+
+Errors for unsuccessful submits will be displayed at the top. If user's upload an incorrect file type (ie not a jpg or png) an error will be displayed along with how they want to resolute the error
+![create_story_failure](/READMEscreenshots/createStoryPageFailure.png)
+<br/>
+<br/>
+
+On success a message will be displayed at the top and they will be redirected to home
+![create_story_success](/READMEscreenshots/createStoryPageSuccess.png)
+<br/>
+<br/>
+
+If a user selects one of their own story, there will be two buttons next to their name: one to edit the story and one to delete the story
+![single_story_user](/READMEscreenshots/singleStoryIsUser.png)
+<br/>
+<br/>
+
+These buttons do not appear if the story do NOT belong to the currently signed in user
+![single_story_no_user](/READMEscreenshots/singleStoryNotUserNoPicture.png)
+<br/>
+<br/>
+
+To delete: click on the red delete button > confirm
+![delete_story_1](/READMEscreenshots/deleteStory.png)
+<br/>
+<br/>
+
+To edit: click on the green edit button. You can change the title, content, delete the current picture(if there is one) and/or upload a new picture(only if you delete the current picture or the story had no picture to begin with)
+![edit_story_form](/READMEscreenshots/editStoryForm.png)
+![edit_story_form_w_image](/READMEscreenshots/editStoryFormWithImage.png)
+![edit_story_form_w_image_confirm](/READMEscreenshots/editStoryFormWithImageConfirm.png)
+![edit_story_form_w_image_confirm_result](/READMEscreenshots/editStoryFormWithImageConfirmResult.png)
+<br/>
+<br/>
+
+On failure of edit story, an error message will be displayed on top and users can re-edit to fix any issues/upload an image of proper file type
+![edit_story_failure](/READMEscreenshots/editStoryFailure.png)
+<br/>
+<br/>
+
+On success of edit story, a success message will be displayed on top and users will be taken back to the home screen
+![edit_story_success](/READMEscreenshots/editStorySuccess.png)
+<br/>
+<br/>
+
+There is also a search bar to search for titles or specific words found in content
+![search_bar](/READMEscreenshots/searchFeature.png)
+<br/>
+<br/>
+
+You can also view all stories published by a specific user
+![user_page](/READMEscreenshots/userPage.png)
+<br/>
+<br/>
+
+If the user does not exist or a specific user does not have stories, this message will appear
+![user_page_no_stories](/READMEscreenshots/userPageNoUserOrNoStories.png)
