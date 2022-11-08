@@ -7,7 +7,7 @@
 
 # What does the app do?
 
-Visitors can search for and read user-generated content. People that sign up can create, update and delete their own content! [Click here for a more in-depth walkthrough](#-walkthrough)
+Visitors can search for and read user-generated content. People that sign up can create, update and delete their own content! [Click here for a more in-depth walkthrough](#walkthrough)
 
 # Features
 
