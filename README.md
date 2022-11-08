@@ -124,10 +124,10 @@ To delete: click on the red trashcan button > delete. <br/>
 <br/>
 
 To edit: click on the green edit button. You can change the title, content, delete the current picture(if there is one) and/or upload a new picture(only if you delete the current picture or the story had no picture to begin with). <br/>
-![edit_story_form](/READMEscreenshots/editStoryForm.png)
 ![edit_story_form_w_image](/READMEscreenshots/editStoryFormWithImage.png)
 ![edit_story_form_w_image_confirm](/READMEscreenshots/editStoryFormWithImageConfirm.png)
 ![edit_story_form_w_image_confirm_result](/READMEscreenshots/editStoryFormWithImageConfirmResult.png)
+![edit_story_form](/READMEscreenshots/editStoryForm.png)
 <br/>
 <br/>
 
