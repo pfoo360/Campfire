@@ -7,7 +7,9 @@
 
 # What does the app do?
 
-Visitors can search for and read user-generated content. People that sign up can create, update and delete their own content! [Click here for a walkthrough](#walkthrough)
+Campfire is my rendition of a blogging app. <br/>
+
+Visitors can search for and read user-generated short stories. People that sign up can create, update and delete their own stories! [Click here for a walkthrough](#walkthrough)
 
 # Features
 
