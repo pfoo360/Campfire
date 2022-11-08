@@ -63,7 +63,7 @@ Visitors can search for and read user-generated content. People that sign up can
 
 # Walkthrough
 
-Visitors can come and read all user-generated content. Infinite scrolling is used for pagination.
+Visitors can come and read all user-generated content. Infinite scrolling is used for pagination. <br/>
 ![home_page_logged_out](/READMEscreenshots/loggedOutHomePage.png)
 <br/>
 <br/>
@@ -73,57 +73,57 @@ View from a mobile device (iPhone Pro 12) <br/>
 <br/>
 <br/>
 
-If a visitor would like to submit content, they will need to register first.
+If a visitor would like to submit content, they will need to register first. <br/>
 ![registration_page](/READMEscreenshots/registrationPage.png)
 <br/>
 <br/>
 
-Formik components were used for validation and error handling.
+Formik components were used for validation and error handling. <br/>
 ![registration_page_validation_error](/READMEscreenshots/registrationPageFormValidation.png)
 <br/>
 <br/>
 
-Once registered, they will be able to log in (Formik hooks were used for validation and error handling).
+Once registered, they will be able to log in (Formik hooks were used for validation and error handling). <br/>
 ![login_page](/READMEscreenshots/logInPageFormValidation.png)
 <br/>
 <br/>
 
-Upon successful log in, they will be able to submit their own content by clicking the emoji/icon next to the logout button.
+Upon successful log in, they will be able to submit their own content by clicking the emoji/icon next to the logout button. <br/>
 ![home_page_logged_in](/READMEscreenshots/loggedInHomePage.png)
 <br/>
 <br/>
 
-Here, they can submit a title(required) and a story(required). React-quill provides a rich-text editor and the toolbar was customized a little to suit the project's need. Users can also submit a picture to go along with their story(optional).
+Here, they can submit a title(required) and a story(required). React-quill provides a rich-text editor and the toolbar was customized a little to suit the project's need. Users can also submit a picture to go along with their story(optional). <br/>
 ![create_story](/READMEscreenshots/createStoryPage.png)
 <br/>
 <br/>
 
-Errors for unsuccessful submits will be displayed at the top. If user's upload an incorrect file type (ie not a jpg or png) an error will be displayed along with how they want to resolute the error
+Errors for unsuccessful submits will be displayed at the top. If user's upload an incorrect file type (ie not a jpg or png) an error will be displayed along with how they want to resolute the error. <br/>
 ![create_story_failure](/READMEscreenshots/createStoryPageFailure.png)
 <br/>
 <br/>
 
-On success a message will be displayed at the top and they will be redirected to home
+On success a message will be displayed at the top and they will be redirected to home. <br/>
 ![create_story_success](/READMEscreenshots/createStoryPageSuccess.png)
 <br/>
 <br/>
 
-If a user selects one of their own story, there will be two buttons next to their name: one to edit the story and one to delete the story
+If a user selects one of their own stories, there will be two buttons next to their name: one to edit the story and one to delete the story. <br/>
 ![single_story_user](/READMEscreenshots/singleStoryIsUser.png)
 <br/>
 <br/>
 
-These buttons do not appear if the story do NOT belong to the currently signed in user
+These buttons do not appear if the story do NOT belong to the currently signed in user. <br/>
 ![single_story_no_user](/READMEscreenshots/singleStoryNotUserNoPicture.png)
 <br/>
 <br/>
 
-To delete: click on the red delete button > confirm
+To delete: click on the red delete button > confirm. <br/>
 ![delete_story_1](/READMEscreenshots/deleteStory.png)
 <br/>
 <br/>
 
-To edit: click on the green edit button. You can change the title, content, delete the current picture(if there is one) and/or upload a new picture(only if you delete the current picture or the story had no picture to begin with)
+To edit: click on the green edit button. You can change the title, content, delete the current picture(if there is one) and/or upload a new picture(only if you delete the current picture or the story had no picture to begin with). <br/>
 ![edit_story_form](/READMEscreenshots/editStoryForm.png)
 ![edit_story_form_w_image](/READMEscreenshots/editStoryFormWithImage.png)
 ![edit_story_form_w_image_confirm](/READMEscreenshots/editStoryFormWithImageConfirm.png)
@@ -131,25 +131,25 @@ To edit: click on the green edit button. You can change the title, content, dele
 <br/>
 <br/>
 
-On failure of edit story, an error message will be displayed on top and users can re-edit to fix any issues/upload an image of proper file type
+On failure of edit story, an error message will be displayed on top and users can re-edit to fix any issues/upload an image of proper file type. <br/>
 ![edit_story_failure](/READMEscreenshots/editStoryFailure.png)
 <br/>
 <br/>
 
-On success of edit story, a success message will be displayed on top and users will be taken back to the home screen
+On success of edit story, a success message will be displayed on top and users will be taken back to the home screen. <br/>
 ![edit_story_success](/READMEscreenshots/editStorySuccess.png)
 <br/>
 <br/>
 
-There is also a search bar to search for titles or specific words found in content
+There is also a search bar to search for titles or specific words found in content. <br/>
 ![search_bar](/READMEscreenshots/searchFeature.png)
 <br/>
 <br/>
 
-You can also view all stories published by a specific user
+You can also view all stories published by a specific user. <br/>
 ![user_page](/READMEscreenshots/userPage.png)
 <br/>
 <br/>
 
-If the user does not exist or a specific user does not have stories, this message will appear
+If the user does not exist or a specific user does not have stories, this message will appear. <br/>
 ![user_page_no_stories](/READMEscreenshots/userPageNoUserOrNoStories.png)
