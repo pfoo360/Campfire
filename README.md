@@ -113,7 +113,7 @@ If a user selects one of their own stories, there will be two buttons next to th
 <br/>
 <br/>
 
-These buttons do not appear if the story do NOT belong to the currently signed in user. <br/>
+These buttons do NOT appear if the story does NOT belong to the currently signed in user. <br/>
 ![single_story_no_user](/READMEscreenshots/singleStoryNotUserNoPicture.png)
 <br/>
 <br/>
