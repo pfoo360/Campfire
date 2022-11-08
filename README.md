@@ -118,7 +118,7 @@ These buttons do NOT appear if the story does NOT belong to the currently signed
 <br/>
 <br/>
 
-To delete: click on the red delete button > confirm. <br/>
+To delete: click on the red trashcan button > delete. <br/>
 ![delete_story_1](/READMEscreenshots/deleteStory.png)
 <br/>
 <br/>
