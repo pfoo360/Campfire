@@ -9,7 +9,7 @@
 
 Campfire is my rendition of a blogging app. <br/>
 
-Visitors can search for and read user-generated short stories. People that sign up can create, update and delete their own stories! [Click here for a walkthrough](#walkthrough)
+Visitors can search for and read user-generated short stories. People that sign up can create, update and delete their own stories! [Click here for a walkthrough.](#walkthrough)
 
 # Features
 
