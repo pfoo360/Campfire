@@ -63,6 +63,14 @@ Visitors can search for and read user-generated short stories. People that sign 
 - OOP
 - And much more!
 
+# Improvements
+
+- Store images in cloud storage rather than locally in client/src/upload
+- Lazy load images and story cards for better UX
+- More error handling for better UX
+- Have users perform an email confirmation during registration
+- Improve db schema by dropping redundant columns and using joins instead (user's username and user's id were saved for each story when a user's id would have sufficed)
+
 # Walkthrough
 
 Visitors can come and read all user-generated content. Infinite scrolling is used for pagination. <br/>
