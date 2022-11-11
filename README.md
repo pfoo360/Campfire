@@ -66,6 +66,7 @@ Visitors can search for and read user-generated short stories. People that sign 
 # Improvements
 
 - Store images in cloud storage rather than locally in client/src/upload
+- Better method to determine if a file is/is not an image (currently we are just checking if the file ends in .jpg or .png)
 - Lazy load images and story cards for better UX
 - More error handling for better UX
 - Have users perform an email confirmation during registration
