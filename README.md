@@ -60,7 +60,6 @@ Visitors can search for and read user-generated short stories. People that sign 
 - Frontend-backend-database communication
 - Use pure CSS to style the website and create responsive web design
 - Conditionally rendering CSS
-- OOP
 - And much more!
 
 # Improvements
